@@ -30,4 +30,14 @@ class Post extends Model
             'post' => $this,
         ]);
     }
+
+    public function breadcrumbsName()
+    {
+        return str($this->title)->limit(42);
+    }
+
+    public function recordableShowPath(Recording $recording)
+    {
+        return $recording->recordablePostShowPath();
+    }
 }

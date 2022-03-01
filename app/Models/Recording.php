@@ -64,4 +64,31 @@ class Recording extends Model
             'recording' => $this,
         ]));
     }
+
+    public function computeParentsList()
+    {
+        $parents = collect();
+        $current = $this;
+
+        while ($current = $current->parentRecording) {
+            $parents->add($current);
+        }
+
+        return $parents->reverse()->values();
+    }
+
+    public function breadcrumbsName()
+    {
+        return $this->recordable->breadcrumbsName();
+    }
+
+    public function breadcrumbsShowPath()
+    {
+        return $this->recordable->recordableShowPath($this);
+    }
+
+    public function recordablePostShowPath()
+    {
+        return route('buckets.posts.show', [$this->bucket, $this]);
+    }
 }
