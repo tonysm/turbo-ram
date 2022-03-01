@@ -11,6 +11,7 @@ use Laravel\Jetstream\Team as JetstreamTeam;
 class Team extends JetstreamTeam
 {
     use HasFactory;
+    use Bucketable;
 
     /**
      * The attributes that should be cast.
