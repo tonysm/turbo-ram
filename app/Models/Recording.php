@@ -52,4 +52,16 @@ class Recording extends Model
     {
         $this->recordable()->associate($recordable);
     }
+
+    public function recordablePartialPath()
+    {
+        return $this->recordable->recordablePartialPath();
+    }
+
+    public function recordablePartialData(array $options = [])
+    {
+        return $this->recordable->recordablePartialData(array_replace($options, [
+            'recording' => $this,
+        ]));
+    }
 }

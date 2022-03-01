@@ -9,6 +9,16 @@ use Illuminate\Http\Request;
 
 class BucketPostsController extends Controller
 {
+    public function show(Bucket $bucket, Recording $recording)
+    {
+        $this->authorize('view', $recording);
+
+        return view('bucket-recordings.show', [
+            'bucket' => $bucket,
+            'recording' => $recording,
+        ]);
+    }
+
     public function store(Request $request, Bucket $bucket)
     {
         $this->authorize('addPost', $bucket);

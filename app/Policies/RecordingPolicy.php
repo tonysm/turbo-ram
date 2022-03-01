@@ -14,4 +14,9 @@ class RecordingPolicy
     {
         return $user->belongsToTeam($recording->bucket->bucketableTeam());
     }
+
+    public function view(User $user, Recording $recording)
+    {
+        return $user->belongsToTeam($recording->bucket->bucketableTeam());
+    }
 }
