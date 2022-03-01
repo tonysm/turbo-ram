@@ -8,17 +8,6 @@ use Tests\TestCase;
 
 class CreatePostsTest extends TestCase
 {
-    /**
-     * @test
-     * @dataProvider invalidData
-     */
-    public function validates_posts_payload($payload, $expectedInvalidFields)
-    {
-        $this->actingAs($user = User::factory()->withPersonalTeam()->create())
-            ->post(route('buckets.posts.store', $user->currentTeam->bucket), value($payload))
-            ->assertInvalid($expectedInvalidFields);
-    }
-
     public function invalidData()
     {
         return [
@@ -31,6 +20,17 @@ class CreatePostsTest extends TestCase
                 'expectedInvalidFields' => ['title'],
             ],
         ];
+    }
+
+    /**
+     * @test
+     * @dataProvider invalidData
+     */
+    public function validates_posts_payload($payload, $expectedInvalidFields)
+    {
+        $this->actingAs($user = User::factory()->withPersonalTeam()->create())
+            ->post(route('buckets.posts.store', $user->currentTeam->bucket), value($payload))
+            ->assertInvalid($expectedInvalidFields);
     }
 
     /** @test */
