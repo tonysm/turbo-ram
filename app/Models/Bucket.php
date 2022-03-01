@@ -16,6 +16,11 @@ class Bucket extends Model
         return $this->morphTo();
     }
 
+    public function bucketableTeam()
+    {
+        return $this->bucketable->teamForBucketable();
+    }
+
     public function recordings()
     {
         return $this->hasMany(Recording::class);

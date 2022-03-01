@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Post;
+use App\Models\Team;
 use App\Models\User;
 use Tests\TestCase;
 
@@ -48,5 +49,21 @@ class CreatePostsTest extends TestCase
         $this->assertInstanceOf(Post::class, $user->currentTeam->bucket->recordings->first()->recordable);
         $this->assertEquals('Some post', $user->currentTeam->bucket->recordings->first()->recordable->title);
         $this->assertStringContainsString('<p>Hello World</p>', (string) $user->currentTeam->bucket->recordings->first()->recordable->content);
+    }
+
+    /** @test */
+    public function must_be_from_same_team_as_bucket_to_create_post()
+    {
+        $anotherTeam = Team::factory()->create();
+
+        $this->actingAs($user = User::factory()->withPersonalTeam()->create())
+            ->post(route('buckets.posts.store', $anotherTeam->bucket), [
+                'title' => 'Some post',
+                'content' => '<p>Hello World</p>',
+            ])
+            ->assertForbidden();
+
+        $this->assertCount(0, $user->refresh()->currentTeam->bucket->recordings);
+        $this->assertCount(0, $anotherTeam->refresh()->bucket->recordings);
     }
 }

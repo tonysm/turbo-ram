@@ -10,6 +10,8 @@ class BucketPostsController extends Controller
 {
     public function store(Request $request, Bucket $bucket)
     {
+        $this->authorize('addPost', $bucket);
+
         $request->validate([
             'title' => ['required'],
             'content' => ['required'],
