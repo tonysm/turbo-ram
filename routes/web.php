@@ -12,5 +12,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    Route::resource('buckets.posts', Controllers\BucketPostsController::class);
+    Route::resource('buckets.posts', Controllers\BucketPostsController::class)->parameters(['posts' => 'recording']);
 });

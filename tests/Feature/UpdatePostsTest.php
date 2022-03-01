@@ -43,4 +43,33 @@ class UpdatePostsTest extends TestCase
             ->put(route('buckets.posts.update', [$user->currentTeam->bucket, $recording]), value($payload))
             ->assertInvalid($expectedInvalidFields);
     }
+
+    /** @test */
+    public function updates_post()
+    {
+        $user = User::factory()->withPersonalTeam()->create();
+
+        $post = Post::factory()->create([
+            'title' => 'Old title',
+            'content' => '<p>Old Content</p>',
+        ]);
+
+        $recording = Recording::factory()->create([
+            'bucket_id' => $user->currentTeam->bucket,
+            'creator_id' => $user,
+            'recordable_id' => $post->getKey(),
+            'recordable_type' => $post->getMorphClass(),
+        ]);
+
+        $this->actingAs($user)
+            ->put(route('buckets.posts.update', [$user->currentTeam->bucket, $recording]), [
+                'title' => 'Updated title',
+                'content' => '<p>Updated Content</p>',
+            ])
+            ->assertValid()
+            ->assertRedirect(route('buckets.posts.show', [$user->refresh()->currentTeam->bucket, $recording]));
+
+        $this->assertEquals('Updated title', $recording->refresh()->recordable->title);
+        $this->assertStringContainsString('<p>Updated Content</p>', (string) $recording->recordable->content);
+    }
 }
