@@ -18,3 +18,4 @@ tailwindcss
 /.idea
 /.vscode
 *manifest.json
+phpunit.xml
