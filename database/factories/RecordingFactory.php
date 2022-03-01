@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Bucket;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,9 @@ class RecordingFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'bucket_id' => Bucket::factory(),
+            'creator_id' => User::factory(),
+            'status' => 'active',
         ];
     }
 }
