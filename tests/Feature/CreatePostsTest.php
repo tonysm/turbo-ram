@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Post;
 use App\Models\User;
 use Tests\TestCase;
 
@@ -35,5 +36,17 @@ class CreatePostsTest extends TestCase
     /** @test */
     public function creates_post()
     {
+        $this->actingAs($user = User::factory()->withPersonalTeam()->create())
+            ->post(route('buckets.posts.store', $user->currentTeam->bucket), [
+                'title' => 'Some post',
+                'content' => '<p>Hello World</p>',
+            ])
+            ->assertValid()
+            ->assertRedirect();
+
+        $this->assertCount(1, $user->refresh()->currentTeam->bucket->recordings);
+        $this->assertInstanceOf(Post::class, $user->currentTeam->bucket->recordings->first()->recordable);
+        $this->assertEquals('Some post', $user->currentTeam->bucket->recordings->first()->recordable->title);
+        $this->assertStringContainsString('<p>Hello World</p>', (string) $user->currentTeam->bucket->recordings->first()->recordable->content);
     }
 }

@@ -16,3 +16,4 @@ Importmap::pin("pusher-js", to: "https://ga.jspm.io/npm:pusher-js@7.0.3/dist/web
 Importmap::pin("alpinejs", to: "https://ga.jspm.io/npm:alpinejs@3.9.0/dist/module.esm.js");
 Importmap::pin("@hotwired/turbo", to: "https://ga.jspm.io/npm:@hotwired/turbo@7.1.0/dist/turbo.es2017-esm.js");
 Importmap::pin("@hotwired/stimulus", to: "https://ga.jspm.io/npm:@hotwired/stimulus@3.0.1/dist/stimulus.js");
+Importmap::pin("trix", to: "https://ga.jspm.io/npm:trix@2.0.0-alpha.1/dist/trix.js");

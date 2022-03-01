@@ -9,6 +9,8 @@ class Recording extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function bucket()
     {
         return $this->belongsTo(Bucket::class);
@@ -34,8 +36,10 @@ class Recording extends Model
         $this->bucket()->associate($bucket);
     }
 
-    public function setParentRecordingAttribute(Recording $parent)
+    public function setParentRecordingAttribute(?Recording $parent)
     {
+        if (! $parent) return;
+
         $this->parentRecording()->associate($parent);
     }
 

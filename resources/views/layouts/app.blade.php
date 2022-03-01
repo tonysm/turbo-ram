@@ -13,6 +13,7 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ tailwindcss('css/app.css') }}">
+        <link rel="stylesheet" href="https://ga.jspm.io/npm:trix@2.0.0-alpha.1/dist/trix.css">
 
         @livewireStyles
 

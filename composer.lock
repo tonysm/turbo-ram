@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5a65e99e281cd5f946b9172815d45112",
+    "content-hash": "d495aa228e3489bae3bf1af71b94c0e5",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -5739,6 +5739,74 @@
             "time": "2021-12-08T09:12:39+00:00"
         },
         {
+            "name": "tonysm/globalid-laravel",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tonysm/globalid-laravel.git",
+                "reference": "63ff6d82304ad5415a72374985ba9c1235362fcf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tonysm/globalid-laravel/zipball/63ff6d82304ad5415a72374985ba9c1235362fcf",
+                "reference": "63ff6d82304ad5415a72374985ba9c1235362fcf",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^8.47|^9.0",
+                "php": "^8.0|^8.1",
+                "spatie/laravel-package-tools": "^1.9.2"
+            },
+            "require-dev": {
+                "nunomaduro/collision": "^5.3|^6.0",
+                "orchestra/testbench": "^6.24",
+                "phpunit/phpunit": "^9.5",
+                "spatie/laravel-ray": "^1.29",
+                "vimeo/psalm": "^4.8"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Tonysm\\GlobalId\\GlobalIdServiceProvider"
+                    ],
+                    "aliases": {
+                        "GlobalId": "Tonysm\\GlobalId\\GlobalIdFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Tonysm\\GlobalId\\": "src",
+                    "Tonysm\\GlobalId\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tony Messias",
+                    "email": "tonysm@hey.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Identify app models with a URI. Inspired by the globalid gem.",
+            "homepage": "https://github.com/tonysm/globalid-laravel",
+            "keywords": [
+                "globalid",
+                "globalid-laravel",
+                "laravel",
+                "tonysm"
+            ],
+            "support": {
+                "issues": "https://github.com/tonysm/globalid-laravel/issues",
+                "source": "https://github.com/tonysm/globalid-laravel/tree/1.1.0"
+            },
+            "time": "2022-01-29T20:57:04+00:00"
+        },
+        {
             "name": "tonysm/importmap-laravel",
             "version": "0.4.1",
             "source": {
@@ -5814,6 +5882,71 @@
                 }
             ],
             "time": "2022-02-13T16:51:27+00:00"
+        },
+        {
+            "name": "tonysm/rich-text-laravel",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tonysm/rich-text-laravel.git",
+                "reference": "64f59eac519cd5900486fad0e3edd92312022f4e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tonysm/rich-text-laravel/zipball/64f59eac519cd5900486fad0e3edd92312022f4e",
+                "reference": "64f59eac519cd5900486fad0e3edd92312022f4e",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^8.47|^9.0",
+                "php": "^8.0|^8.1",
+                "spatie/laravel-package-tools": "^1.9.2",
+                "tonysm/globalid-laravel": "^1.1.0"
+            },
+            "require-dev": {
+                "nunomaduro/collision": "^5.3|^6.0",
+                "orchestra/testbench": "^6.24",
+                "phpunit/phpunit": "^9.5",
+                "spatie/laravel-ray": "^1.29",
+                "vimeo/psalm": "^4.8"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Tonysm\\RichTextLaravel\\RichTextLaravelServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Tonysm\\RichTextLaravel\\": "src",
+                    "Tonysm\\RichTextLaravel\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tony Messias",
+                    "email": "tonysm@hey.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Integrates Trix content with Laravel",
+            "homepage": "https://github.com/tonysm/rich-text-laravel",
+            "keywords": [
+                "laravel",
+                "rich-text-laravel",
+                "tonysm"
+            ],
+            "support": {
+                "issues": "https://github.com/tonysm/rich-text-laravel/issues",
+                "source": "https://github.com/tonysm/rich-text-laravel/tree/1.4.0"
+            },
+            "time": "2022-02-09T01:28:18+00:00"
         },
         {
             "name": "tonysm/tailwindcss-laravel",
