@@ -72,4 +72,20 @@ class UpdatePostsTest extends TestCase
         $this->assertEquals('Updated title', $recording->refresh()->recordable->title);
         $this->assertStringContainsString('<p>Updated Content</p>', (string) $recording->recordable->content);
     }
+
+    /** @test */
+    public function must_be_from_same_team_as_bucket()
+    {
+        $user = User::factory()->withPersonalTeam()->create();
+
+        // Recording from another bucket/team...
+        $recording = Recording::factory()->create();
+
+        $this->actingAs($user)
+            ->put(route('buckets.posts.update', [$user->currentTeam->bucket, $recording]), [
+                'title' => 'Updated title',
+                'content' => '<p>Updated Content</p>',
+            ])
+            ->assertForbidden();
+    }
 }

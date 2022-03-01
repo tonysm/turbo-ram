@@ -25,6 +25,8 @@ class BucketPostsController extends Controller
 
     public function update(Request $request, Bucket $bucket, Recording $recording)
     {
+        $this->authorize('update', $recording);
+
         $recording->update([
             'recordable' => tap($this->newPost($request))->save(),
         ]);

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Bucket;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,6 +23,8 @@ class RecordingFactory extends Factory
             'bucket_id' => Bucket::factory(),
             'creator_id' => User::factory(),
             'status' => 'active',
+            'recordable_type' => (new Post())->getMorphClass(),
+            'recordable_id' => Post::factory(),
         ];
     }
 }

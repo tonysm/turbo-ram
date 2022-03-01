@@ -18,7 +18,8 @@ class BucketFactory extends Factory
     public function definition()
     {
         return [
-            'bucketable' => Team::factory(),
+            'bucketable_id' => Team::factory(),
+            'bucketable_type' => (new Team)->getMorphClass(),
         ];
     }
 }
