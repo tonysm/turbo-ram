@@ -74,12 +74,14 @@ class UpdatePostsTest extends TestCase
     }
 
     /** @test */
-    public function must_be_from_same_team_as_bucket()
+    public function only_authors_can_update_their_posts()
     {
         $user = User::factory()->withPersonalTeam()->create();
 
-        // Recording from another bucket/team...
-        $recording = Recording::factory()->create();
+        // Recording from another user in the bucket/team...
+        $recording = Recording::factory()->create([
+            'bucket_id' => $user->currentTeam->bucket,
+        ]);
 
         $this->actingAs($user)
             ->put(route('buckets.posts.update', [$user->currentTeam->bucket, $recording]), [
