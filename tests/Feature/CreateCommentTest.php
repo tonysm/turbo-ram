@@ -30,6 +30,26 @@ class CreateCommentTest extends TestCase
     }
 
     /** @test */
+    public function validates_comment_data()
+    {
+        $user = User::factory()->withPersonalTeam()->create();
+
+        $post = Post::factory()->create();
+
+        $recording = Recording::factory()->create([
+            'bucket_id' => $user->currentTeam->bucket,
+            'recordable_type' => $post->getMorphClass(),
+            'recordable_id' => $post->getKey(),
+        ]);
+
+        $this->actingAs($user)
+            ->post(route('recordings.comments.store', [$recording]), [
+                'content' => '',
+            ])
+            ->assertInvalid(['content']);
+    }
+
+    /** @test */
     public function can_create_comment_on_recording()
     {
         $user = User::factory()->withPersonalTeam()->create();
