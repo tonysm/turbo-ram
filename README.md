@@ -5,7 +5,7 @@ Todo Web:
 - [x] Update a Post
 - [x] Delete a Post
 - [x] Comment on a Post
-- [ ] Update a Comment
+- [x] Update a Comment
 - [ ] Delete a Comment
 - [ ] React to a Post
 - [ ] Sanitize HTML from Documents (Posts and comments)
