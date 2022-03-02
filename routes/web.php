@@ -9,7 +9,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
-        if ($team = request()->user()->currentTeam) {
+        if (($team = request()->user()->currentTeam) && $team->bucket->recordings()->posts()->exists()) {
             return redirect()->route('buckets.posts.index', $team->bucket);
         }
 
