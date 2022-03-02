@@ -18,7 +18,7 @@ class PostFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence(),
-            'content' => $this->faker->randomHtml(),
+            'content' => str($this->faker->text())->explode(PHP_EOL)->map(fn ($line) => "<p>{$line}</p>")->implode(''),
         ];
     }
 }

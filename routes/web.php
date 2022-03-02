@@ -9,6 +9,10 @@ Route::get('/', function () {
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
+        if ($team = request()->user()->currentTeam) {
+            return redirect()->route('buckets.posts.index', $team->bucket);
+        }
+
         return view('dashboard');
     })->name('dashboard');
 

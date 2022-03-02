@@ -4,6 +4,6 @@
     </h1>
 
     <div>
-        {{ $recording->recordable->content }}
+        {!! $recording->recordable->content !!}
     </div>
 </div>

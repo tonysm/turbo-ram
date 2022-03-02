@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Post;
+use App\Models\Recording;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,6 +17,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $user = User::factory()->withPersonalTeam()->create([
+            'name' => 'Tony Messias',
+            'email' => 'tonysm@hey.com',
+        ]);
+
+        Post::factory()->times(20)->create()->each(fn ($post) => Recording::factory()
+            ->for($user->currentTeam->bucket, 'bucket')
+            ->for($user, 'creator')
+            ->for($post, 'recordable')
+            ->create());
     }
 }
