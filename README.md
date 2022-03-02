@@ -1,7 +1,7 @@
 Todo Web:
 
 - [x] Create a Post
-- [ ] View a Post
+- [x] View a Post
 - [x] Update a Post
 - [ ] Delete a Post
 - [ ] Comment on a Post
