@@ -17,6 +17,11 @@ class Recording extends Model
         $query->where('recordable_type', (new Post())->getMorphClass());
     }
 
+    public function scopeComments(Builder $query): void
+    {
+        $query->where('recordable_type', (new Comment())->getMorphClass());
+    }
+
     public function bucket()
     {
         return $this->belongsTo(Bucket::class);

@@ -8,6 +8,19 @@ use Illuminate\Http\Request;
 
 class RecordingCommentsController extends Controller
 {
+    public function index(Recording $recording)
+    {
+        $this->authorize('view', $recording);
+
+        return view('recording_comments.index', [
+            'recording' => $recording,
+            'comments' => $recording->children()
+                ->comments()
+                ->oldest('id')
+                ->cursorPaginate(15)
+        ]);
+    }
+
     public function store(Request $request, Recording $recording)
     {
         $this->authorize('addComment', $recording);
