@@ -3,7 +3,7 @@ Todo Web:
 - [x] Create a Post
 - [x] View a Post
 - [x] Update a Post
-- [ ] Delete a Post
+- [x] Delete a Post
 - [ ] Comment on a Post
 - [ ] Update a Comment
 - [ ] Delete a Comment
