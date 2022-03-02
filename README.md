@@ -4,7 +4,7 @@ Todo Web:
 - [x] View a Post
 - [x] Update a Post
 - [x] Delete a Post
-- [ ] Comment on a Post
+- [x] Comment on a Post
 - [ ] Update a Comment
 - [ ] Delete a Comment
 - [ ] React to a Post
