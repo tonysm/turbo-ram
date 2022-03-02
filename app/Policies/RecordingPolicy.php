@@ -19,4 +19,9 @@ class RecordingPolicy
     {
         return $user->belongsToTeam($recording->bucket->bucketableTeam());
     }
+
+    public function destroy(User $user, Recording $recording)
+    {
+        return $user->is($recording->creator);
+    }
 }

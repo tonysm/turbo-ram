@@ -44,6 +44,15 @@ class BucketPostsController extends Controller
         return to_route('buckets.posts.show', [$bucket, $recording]);
     }
 
+    public function destroy(Bucket $bucket, Recording $recording)
+    {
+        $this->authorize('destroy', $recording);
+
+        $recording->delete();
+
+        return redirect()->route('dashboard')->with('status', 'Post was deleted');
+    }
+
     private function newPost(Request $request): Post
     {
         return new Post($request->validate([
