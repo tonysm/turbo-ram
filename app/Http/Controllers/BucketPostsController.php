@@ -26,7 +26,7 @@ class BucketPostsController extends Controller
     {
         $this->authorize('view', $recording);
 
-        return view('bucket-recordings.show', [
+        return view('bucket_posts.show', [
             'bucket' => $bucket,
             'recording' => $recording,
         ]);

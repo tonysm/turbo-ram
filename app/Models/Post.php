@@ -19,18 +19,6 @@ class Post extends Model
         return $this->morphOne(Recording::class, 'recordable');
     }
 
-    public function recordablePartialPath()
-    {
-        return 'posts._post';
-    }
-
-    public function recordablePartialData(array $options = [])
-    {
-        return array_replace($options, [
-            'post' => $this,
-        ]);
-    }
-
     public function breadcrumbsName()
     {
         return str($this->title)->limit(42);
