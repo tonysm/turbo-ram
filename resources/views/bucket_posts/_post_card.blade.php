@@ -5,7 +5,7 @@
         </h1>
 
         <div>
-            {!! $recording->recordable->content !!}
+            {{ str($recording->recordable->content->toPlainText())->limit(300) }}
         </div>
     </div>
 </a>

@@ -9,9 +9,13 @@
 <form method="POST" action="{{ $recording->exists ? route('buckets.posts.update', [$recording->bucket, $recording]) : route('buckets.posts.store', $recording->bucket) }}">
     @csrf
 
+    @if ($recording->exists)
+        @method('PUT')
+    @endif
+
     <div>
         <x-jet-label for="title" value="{{ __('Title') }}" />
-        <x-jet-input id="title" class="block mt-1 w-full" type="text" name="title" :value="old('title')" autofocus />
+        <x-jet-input id="title" class="block mt-1 w-full" type="text" name="title" :value="old('title', $recording->recordable->title)" autofocus />
     </div>
 
     <div class="mt-4">
@@ -25,7 +29,7 @@
         </a>
 
         <x-jet-button class="ml-4">
-            {{ __('Log in') }}
+            {{ __('Save') }}
         </x-jet-button>
     </div>
 </form>

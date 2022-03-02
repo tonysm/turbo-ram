@@ -56,6 +56,20 @@ class BucketPostsController extends Controller
         return redirect()->route('buckets.posts.show', [$bucket, $recording]);
     }
 
+    public function edit(Request $request, Bucket $bucket, Recording $recording)
+    {
+        $this->authorize('update', $recording);
+
+        return view('bucket_posts.edit', [
+            'bucket' => $bucket,
+            'recording' => tap($recording, function ($recording) use ($request) {
+                if ($request->old('title') || $request->old('content')) {
+                    $recording->setRelation('recordable', $this->newPost($request, required: false));
+                }
+            }),
+        ]);
+    }
+
     public function update(Request $request, Bucket $bucket, Recording $recording)
     {
         $this->authorize('update', $recording);

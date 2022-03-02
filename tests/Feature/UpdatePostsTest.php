@@ -9,6 +9,40 @@ use Tests\TestCase;
 
 class UpdatePostsTest extends TestCase
 {
+    /** @test */
+    public function only_authors_can_view_the_form_to_edit_their_posts()
+    {
+        $user = User::factory()->withPersonalTeam()->create();
+
+        // Recording from another user in the bucket/team...
+        $recording = Recording::factory()->create([
+            'bucket_id' => $user->currentTeam->bucket,
+        ]);
+
+        $this->actingAs($user)
+            ->get(route('buckets.posts.edit', [$user->currentTeam->bucket, $recording]))
+            ->assertForbidden();
+    }
+
+    /** @test */
+    public function can_view_edit_posts_form()
+    {
+        $user = User::factory()->withPersonalTeam()->create();
+
+        $post = Post::factory()->create();
+
+        $recording = Recording::factory()->create([
+            'bucket_id' => $user->currentTeam->bucket,
+            'creator_id' => $user,
+            'recordable_id' => $post->getKey(),
+            'recordable_type' => $post->getMorphClass(),
+        ]);
+
+        $this->actingAs($user)
+            ->get(route('buckets.posts.edit', [$user->currentTeam->bucket, $recording]))
+            ->assertOk();
+    }
+
     public function invalidData()
     {
         return [
