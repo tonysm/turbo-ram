@@ -1,4 +1,4 @@
-<a href="{{ $recording->recordableShowPath() }}" class="block">
+<a href="{{ $recording->recordableShowPath() }}" class="block py-8">
     <div class="flex flex-col gap-2">
         <h1 class="font-semibold text-3xl text-gray-900 leading-tight">
             {{ $recording->recordable->title }}

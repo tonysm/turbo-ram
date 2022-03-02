@@ -9,16 +9,6 @@ use Illuminate\Http\Request;
 
 class BucketPostsController extends Controller
 {
-    public function create(Request $request, Bucket $bucket)
-    {
-        $this->authorize('addPost', $bucket);
-
-        return view('bucket_posts.create', [
-            'bucket' => $bucket,
-            'recording' => $bucket->recordings()->make()->setRelation('recordable', $this->newPost($request, required: false)),
-        ]);
-    }
-
     public function index(Bucket $bucket)
     {
         $this->authorize('view', $bucket);
@@ -29,6 +19,16 @@ class BucketPostsController extends Controller
                 ->posts()
                 ->latest('id')
                 ->cursorPaginate(15),
+        ]);
+    }
+
+    public function create(Request $request, Bucket $bucket)
+    {
+        $this->authorize('addPost', $bucket);
+
+        return view('bucket_posts.create', [
+            'bucket' => $bucket,
+            'recording' => $bucket->recordings()->make()->setRelation('recordable', $this->newPost($request, required: false)),
         ]);
     }
 
