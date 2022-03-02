@@ -105,6 +105,15 @@ class Recording extends Model
         ]));
     }
 
+    public function recordableCommentShowPath(array $options = [])
+    {
+        return route('buckets.posts.show', array_replace($options, [
+            'bucket' => $this->bucket,
+            'recording' => $this->parentRecording,
+            $this->pageFragmentId(),
+        ]));
+    }
+
     public function pageFragmentId()
     {
         return sprintf('#recording_%s', $this->id);

@@ -14,4 +14,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::resource('buckets.posts', Controllers\BucketPostsController::class)->parameters(['posts' => 'recording']);
     Route::resource('recordings.comments', Controllers\RecordingCommentsController::class)->only(['index', 'create', 'store']);
+    Route::resource('comments', Controllers\CommentsController::class)->parameters(['comments' => 'recording'])->only(['show', 'edit', 'update', 'destroy']);
 });

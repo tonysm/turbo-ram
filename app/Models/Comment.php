@@ -19,4 +19,9 @@ class Comment extends Model
     {
         return $this->morphOne(Recording::class, 'recordable');
     }
+
+    public function recordableShowPath(Recording $recording, array $options)
+    {
+        return $recording->recordableCommentShowPath($options);
+    }
 }

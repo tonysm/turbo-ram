@@ -12,7 +12,7 @@ class RecordingPolicy
 
     public function update(User $user, Recording $recording)
     {
-        return $user->belongsToTeam($recording->bucket->bucketableTeam());
+        return $user->is($recording->creator);
     }
 
     public function view(User $user, Recording $recording)
