@@ -31,6 +31,11 @@ class Recording extends Model
         return $this->morphTo();
     }
 
+    public function children()
+    {
+        return $this->hasMany(Recording::class, 'parent_recording_id');
+    }
+
     public function setBucketAttribute(Bucket $bucket)
     {
         $this->bucket()->associate($bucket);
@@ -84,11 +89,24 @@ class Recording extends Model
 
     public function breadcrumbsShowPath()
     {
-        return $this->recordable->recordableShowPath($this);
+        return $this->recordableShowPath();
     }
 
-    public function recordablePostShowPath()
+    public function recordableShowPath(array $options = [])
     {
-        return route('buckets.posts.show', [$this->bucket, $this]);
+        return $this->recordable->recordableShowPath($this, $options);
+    }
+
+    public function recordablePostShowPath(array $options = [])
+    {
+        return route('buckets.posts.show', array_replace($options, [
+            'bucket' => $this->bucket,
+            'recording' => $this,
+        ]));
+    }
+
+    public function pageFragmentId()
+    {
+        return sprintf('#recording_%s', $this->id);
     }
 }

@@ -24,4 +24,9 @@ class RecordingPolicy
     {
         return $user->is($recording->creator);
     }
+
+    public function addComment(User $user, Recording $recording)
+    {
+        return $user->belongsToTeam($recording->bucket->bucketableTeam());
+    }
 }

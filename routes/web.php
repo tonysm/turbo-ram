@@ -13,4 +13,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::resource('buckets.posts', Controllers\BucketPostsController::class)->parameters(['posts' => 'recording']);
+    Route::resource('recordings.comments', Controllers\RecordingCommentsController::class)->only(['index', 'create', 'store']);
 });

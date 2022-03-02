@@ -36,8 +36,8 @@ class Post extends Model
         return str($this->title)->limit(42);
     }
 
-    public function recordableShowPath(Recording $recording)
+    public function recordableShowPath(Recording $recording, array $options = [])
     {
-        return $recording->recordablePostShowPath();
+        return $recording->recordablePostShowPath($options);
     }
 }
