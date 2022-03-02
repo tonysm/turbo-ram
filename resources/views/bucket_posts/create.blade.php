@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            <a href="{{ $recording->exists ? route('buckets.posts.show', [$recording->bucket, $recording]) : route('dashboard') }}">&larr; Back to posts</a>
         </h2>
     </x-slot>
 
@@ -9,12 +9,10 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-8 sm:px-20">
-                    <p class="text-center">You currently have no posts.</p>
-                    <p class="mt-4 text-center">
-                        <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('buckets.posts.create', $bucket) }}">
-                            {{ __('New Post') }}
-                        </a>
-                    </p>
+                    @include('bucket_posts._post_form', [
+                        'bucket' => $bucket,
+                        'recording' => $recording,
+                    ])
                 </div>
             </div>
         </div>

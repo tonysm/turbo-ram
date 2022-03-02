@@ -9,6 +9,16 @@ use Illuminate\Http\Request;
 
 class BucketPostsController extends Controller
 {
+    public function create(Request $request, Bucket $bucket)
+    {
+        $this->authorize('addPost', $bucket);
+
+        return view('bucket_posts.create', [
+            'bucket' => $bucket,
+            'recording' => $bucket->recordings()->make()->setRelation('recordable', $this->newPost($request, required: false)),
+        ]);
+    }
+
     public function index(Bucket $bucket)
     {
         $this->authorize('view', $bucket);
@@ -66,11 +76,11 @@ class BucketPostsController extends Controller
         return redirect()->route('dashboard')->with('status', 'Post was deleted');
     }
 
-    private function newPost(Request $request): Post
+    private function newPost(Request $request, bool $required = true): Post
     {
         return new Post($request->validate([
-            'title' => ['required', 'max:255'],
-            'content' => ['required'],
+            'title' => [$required ? 'required' : 'sometimes', 'max:255'],
+            'content' => [$required ? 'required' : 'sometimes'],
         ]));
     }
 }

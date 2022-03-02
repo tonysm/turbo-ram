@@ -13,7 +13,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
             return redirect()->route('buckets.posts.index', $team->bucket);
         }
 
-        return view('dashboard');
+        return view('dashboard', [
+            'bucket' => $team->bucket,
+        ]);
     })->name('dashboard');
 
     Route::resource('buckets.posts', Controllers\BucketPostsController::class)->parameters(['posts' => 'recording']);

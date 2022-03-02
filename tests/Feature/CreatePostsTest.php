@@ -9,6 +9,24 @@ use Tests\TestCase;
 
 class CreatePostsTest extends TestCase
 {
+    /** @test */
+    public function must_be_from_same_team_to_view_create_posts_form()
+    {
+        $anotherTeam = Team::factory()->create();
+
+        $this->actingAs(User::factory()->withPersonalTeam()->create())
+            ->get(route('buckets.posts.create', $anotherTeam->bucket))
+            ->assertForbidden();
+    }
+
+    /** @test */
+    public function view_create_posts_form()
+    {
+        $this->actingAs($user = User::factory()->withPersonalTeam()->create())
+            ->get(route('buckets.posts.create', $user->currentTeam->bucket))
+            ->assertOk();
+    }
+
     public function invalidData()
     {
         return [
