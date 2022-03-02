@@ -1,8 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Recording Breadcrumbs Will Go Here
-        </h2>
+        <x-recording-breadcrumbs :recording="$recording" />
     </x-slot>
 
     <div class="py-12">
