@@ -9,6 +9,19 @@ use Illuminate\Http\Request;
 
 class BucketPostsController extends Controller
 {
+    public function index(Bucket $bucket)
+    {
+        $this->authorize('view', $bucket);
+
+        return view('bucket_posts.index', [
+            'bucket' => $bucket,
+            'posts' => $bucket->recordings()
+                ->posts()
+                ->latest('id')
+                ->cursorPaginate(15),
+        ]);
+    }
+
     public function show(Bucket $bucket, Recording $recording)
     {
         $this->authorize('view', $recording);

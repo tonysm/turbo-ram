@@ -10,6 +10,11 @@ class BucketPolicy
 {
     use HandlesAuthorization;
 
+    public function view(User $user, Bucket $bucket)
+    {
+        return $user->belongsToTeam($bucket->bucketableTeam());
+    }
+
     public function addPost(User $user, Bucket $bucket)
     {
         return $user->belongsToTeam($bucket->bucketableTeam());
