@@ -21,6 +21,17 @@ class CommentsController extends Controller
         ]);
     }
 
+    public function destroy(Recording $recording)
+    {
+        $this->authorize('destroy', $recording);
+
+        $recording->delete();
+
+        return redirect($recording->parentRecording->recordableShowPath())->with([
+            'status' => __('Comment was deleted!'),
+        ]);
+    }
+
     private function newComment(Request $request): Comment
     {
         return new Comment($request->validate([
