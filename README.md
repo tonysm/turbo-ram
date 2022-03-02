@@ -6,7 +6,7 @@ Todo Web:
 - [x] Update a Post
 - [x] Delete a Post
 - [x] Comment on a Post
-- [ ] List Comments
+- [x] List Comments
 - [x] Update a Comment
 - [x] Delete a Comment
 - [ ] React to a Post
