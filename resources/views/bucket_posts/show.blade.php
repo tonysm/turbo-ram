@@ -16,6 +16,8 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-8 sm:px-20">
                     @include('recordings._recording', ['recording' => $recording])
+
+                    @include('recordings._comments', ['recording' => $recording, 'comments' => $comments])
                 </div>
             </div>
         </div>

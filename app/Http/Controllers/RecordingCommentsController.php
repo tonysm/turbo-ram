@@ -21,6 +21,18 @@ class RecordingCommentsController extends Controller
         ]);
     }
 
+    public function create(Request $request, Recording $recording)
+    {
+        $this->authorize('addComment', $recording);
+
+        return view('recording_comments.create', [
+            'recording' => tap($recording->bucket->recordings()->make(), function ($commentRecording) use ($request, $recording) {
+                $commentRecording->setRelation('recordable', $this->newComment($request, required: false));
+                $commentRecording->setRelation('parentRecording', $recording);
+            }),
+        ]);
+    }
+
     public function store(Request $request, Recording $recording)
     {
         $this->authorize('addComment', $recording);
@@ -34,10 +46,10 @@ class RecordingCommentsController extends Controller
             ->with('status', 'Comment was created!');
     }
 
-    private function newComment(Request $request): Comment
+    private function newComment(Request $request, bool $required = true): Comment
     {
         return new Comment($request->validate([
-            'content' => ['required'],
+            'content' => [$required ? 'required' : 'sometimes'],
         ]));
     }
 }

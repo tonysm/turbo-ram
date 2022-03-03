@@ -10,6 +10,41 @@ use Tests\TestCase;
 
 class CreateCommentTest extends TestCase
 {
+   /** @test */
+   public function must_be_from_same_team_to_view_create_comment_form()
+   {
+        $user = User::factory()->withPersonalTeam()->create();
+
+        $post = Post::factory()->create();
+
+        $recording = Recording::factory()->create([
+            'recordable_type' => $post->getMorphClass(),
+            'recordable_id' => $post->getKey(),
+        ]);
+
+        $this->actingAs($user)
+            ->get(route('recordings.comments.create', [$recording]))
+            ->assertForbidden();
+   }
+
+   /** @test */
+   public function can_view_create_comment_form()
+   {
+        $user = User::factory()->withPersonalTeam()->create();
+
+        $post = Post::factory()->create();
+
+        $recording = Recording::factory()->create([
+            'bucket_id' => $user->currentTeam->bucket,
+            'recordable_type' => $post->getMorphClass(),
+            'recordable_id' => $post->getKey(),
+        ]);
+
+        $this->actingAs($user)
+            ->get(route('recordings.comments.create', [$recording]))
+            ->assertOk();
+   }
+
     /** @test */
     public function must_be_from_same_team_as_bucket_to_comment_on_recording()
     {

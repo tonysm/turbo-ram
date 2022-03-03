@@ -1,9 +1,9 @@
-<div class="flex space-x-4">
+<div class="flex space-x-8 py-8">
     <div>
         {{ $recording->creator->name }}
     </div>
 
-    <div>
-        {{ $recording->recordable->content }}
+    <div class="text-lg">
+        {!! $recording->recordable->content !!}
     </div>
 </div>

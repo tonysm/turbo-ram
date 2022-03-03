@@ -32,13 +32,21 @@ class BucketPostsController extends Controller
         ]);
     }
 
-    public function show(Bucket $bucket, Recording $recording)
+    public function show(Request $request, Bucket $bucket, Recording $recording)
     {
         $this->authorize('view', $recording);
 
         return view('bucket_posts.show', [
             'bucket' => $bucket,
-            'recording' => $recording,
+            'recording' => tap($recording, function ($recording) use ($request) {
+                if ($request->old('title') || $request->old('content')) {
+                    $recording->setRelation('recordable', $this->newPost($request, required: false));
+                }
+            }),
+            'comments' => $recording->children()
+                ->comments()
+                ->oldest()
+                ->get(),
         ]);
     }
 
