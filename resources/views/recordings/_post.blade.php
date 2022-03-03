@@ -1,5 +1,5 @@
-<div class="flex flex-col gap-2 py-8">
-    <h1 class="font-semibold text-4xl text-gray-900 leading-tight">
+<div class="flex flex-col gap-8 py-8">
+    <h1 class="font-semibold text-4xl text-gray-900 leading-tight text-center">
         {{ $recording->recordable->title }}
     </h1>
 

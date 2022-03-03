@@ -19,7 +19,7 @@
     </div>
 
     <div class="flex items-center justify-end mt-4">
-        <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ $recording->exists ? route('comments.show', $recording) : route('buckets.posts.show', [$recording->parentRecording->bucket, $recording->parentRecording]) }}">
+        <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ $recording->recordableShowPath() }}">
             {{ __('Cancel') }}
         </a>
 

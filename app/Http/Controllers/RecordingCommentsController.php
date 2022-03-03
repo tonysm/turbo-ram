@@ -42,7 +42,8 @@ class RecordingCommentsController extends Controller
             parent: $recording,
         );
 
-        return redirect($recording->recordableShowPath([$commendRecording->pageFragmentId()]))
+        return redirect($commendRecording->recordableShowPath())
+            ->withFragment((string) str($commendRecording->pageFragmentId())->after('#'))
             ->with('status', 'Comment was created!');
     }
 
