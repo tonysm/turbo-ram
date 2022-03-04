@@ -15,9 +15,7 @@ class UpdatePostsTest extends TestCase
         $user = User::factory()->withPersonalTeam()->create();
 
         // Recording from another user in the bucket/team...
-        $recording = Recording::factory()->create([
-            'bucket_id' => $user->currentTeam->bucket,
-        ]);
+        $recording = Recording::factory()->for($user->currentTeam->bucket)->create();
 
         $this->actingAs($user)
             ->get(route('buckets.posts.edit', [$user->currentTeam->bucket, $recording]))
@@ -29,14 +27,11 @@ class UpdatePostsTest extends TestCase
     {
         $user = User::factory()->withPersonalTeam()->create();
 
-        $post = Post::factory()->create();
-
-        $recording = Recording::factory()->create([
-            'bucket_id' => $user->currentTeam->bucket,
-            'creator_id' => $user,
-            'recordable_id' => $post->getKey(),
-            'recordable_type' => $post->getMorphClass(),
-        ]);
+        $recording = Recording::factory()
+            ->for($user->currentTeam->bucket)
+            ->for($user, 'creator')
+            ->post()
+            ->create();
 
         $this->actingAs($user)
             ->get(route('buckets.posts.edit', [$user->currentTeam->bucket, $recording]))
@@ -64,14 +59,12 @@ class UpdatePostsTest extends TestCase
     public function validates_post_payload($payload, $expectedInvalidFields)
     {
         $user = User::factory()->withPersonalTeam()->create();
-        $post = Post::factory()->create();
 
-        $recording = Recording::factory()->create([
-            'bucket_id' => $user->currentTeam->bucket,
-            'creator_id' => $user,
-            'recordable_id' => $post->getKey(),
-            'recordable_type' => $post->getMorphClass(),
-        ]);
+        $recording = Recording::factory()
+            ->for($user->currentTeam->bucket)
+            ->for($user, 'creator')
+            ->post()
+            ->create();
 
         $this->actingAs($user)
             ->put(route('buckets.posts.update', [$user->currentTeam->bucket, $recording]), value($payload))
@@ -83,17 +76,14 @@ class UpdatePostsTest extends TestCase
     {
         $user = User::factory()->withPersonalTeam()->create();
 
-        $post = Post::factory()->create([
-            'title' => 'Old title',
-            'content' => '<p>Old Content</p>',
-        ]);
-
-        $recording = Recording::factory()->create([
-            'bucket_id' => $user->currentTeam->bucket,
-            'creator_id' => $user,
-            'recordable_id' => $post->getKey(),
-            'recordable_type' => $post->getMorphClass(),
-        ]);
+        $recording = Recording::factory()
+            ->for($user->currentTeam->bucket)
+            ->for($user, 'creator')
+            ->post([
+                'title' => 'Old title',
+                'content' => '<p>Old Content</p>',
+            ])
+            ->create();
 
         $this->actingAs($user)
             ->put(route('buckets.posts.update', [$user->currentTeam->bucket, $recording]), [
@@ -113,9 +103,7 @@ class UpdatePostsTest extends TestCase
         $user = User::factory()->withPersonalTeam()->create();
 
         // Recording from another user in the bucket/team...
-        $recording = Recording::factory()->create([
-            'bucket_id' => $user->currentTeam->bucket,
-        ]);
+        $recording = Recording::factory()->for($user->currentTeam->bucket)->create();
 
         $this->actingAs($user)
             ->put(route('buckets.posts.update', [$user->currentTeam->bucket, $recording]), [

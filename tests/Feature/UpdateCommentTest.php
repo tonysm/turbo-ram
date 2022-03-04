@@ -14,25 +14,17 @@ class UpdateCommentTest extends TestCase
     {
         $user = User::factory()->withPersonalTeam()->create();
 
-        $post = Comment::factory()->create();
+        $postRecording = Recording::factory()
+            ->post()
+            ->for($user, 'creator')
+            ->for($user->currentTeam->bucket)
+            ->create();
 
-        $postRecording = Recording::factory()->create([
-            'bucket_id' => $user->currentTeam->bucket,
-            'creator_id' => $user,
-            'recordable_type' => $post->getMorphClass(),
-            'recordable_id' => $post->getKey(),
-        ]);
-
-        $comment = Comment::factory()->create([
-            'content' => '<p>Old content</p>',
-        ]);
-
-        $commentRecording = Recording::factory()->create([
-            'bucket_id' => $user->currentTeam->bucket,
-            'parent_id' => $postRecording,
-            'recordable_type' => $comment->getMorphClass(),
-            'recordable_id' => $comment->getKey(),
-        ]);
+        $commentRecording = Recording::factory()
+            ->for($user->currentTeam->bucket)
+            ->for($postRecording, 'parent')
+            ->comment(['content' => '<p>Old content</p>'])
+            ->create();
 
         $this->actingAs($user)
             ->get(route('comments.edit', $commentRecording))
@@ -44,26 +36,17 @@ class UpdateCommentTest extends TestCase
     {
         $user = User::factory()->withPersonalTeam()->create();
 
-        $post = Comment::factory()->create();
+        $postRecording = Recording::factory()
+            ->for($user->currentTeam->bucket)
+            ->for($user, 'creator')
+            ->comment();
 
-        $postRecording = Recording::factory()->create([
-            'bucket_id' => $user->currentTeam->bucket,
-            'creator_id' => $user,
-            'recordable_type' => $post->getMorphClass(),
-            'recordable_id' => $post->getKey(),
-        ]);
-
-        $comment = Comment::factory()->create([
-            'content' => '<p>Old content</p>',
-        ]);
-
-        $commentRecording = Recording::factory()->create([
-            'bucket_id' => $user->currentTeam->bucket,
-            'creator_id' => $user,
-            'parent_id' => $postRecording,
-            'recordable_type' => $comment->getMorphClass(),
-            'recordable_id' => $comment->getKey(),
-        ]);
+        $commentRecording = Recording::factory()
+            ->for($user->currentTeam->bucket)
+            ->for($user, 'creator')
+            ->for($postRecording, 'parent')
+            ->comment(['content' => '<p>Old content</p>'])
+            ->create();
 
         $this->actingAs($user)
             ->get(route('comments.edit', $commentRecording))
@@ -75,25 +58,17 @@ class UpdateCommentTest extends TestCase
     {
         $user = User::factory()->withPersonalTeam()->create();
 
-        $post = Comment::factory()->create();
+        $postRecording = Recording::factory()
+            ->for($user->currentTeam->bucket)
+            ->for($user, 'creator')
+            ->post()
+            ->create();
 
-        $postRecording = Recording::factory()->create([
-            'bucket_id' => $user->currentTeam->bucket,
-            'creator_id' => $user,
-            'recordable_type' => $post->getMorphClass(),
-            'recordable_id' => $post->getKey(),
-        ]);
-
-        $comment = Comment::factory()->create([
-            'content' => '<p>Old content</p>',
-        ]);
-
-        $commentRecording = Recording::factory()->create([
-            'bucket_id' => $user->currentTeam->bucket,
-            'parent_id' => $postRecording,
-            'recordable_type' => $comment->getMorphClass(),
-            'recordable_id' => $comment->getKey(),
-        ]);
+        $commentRecording = Recording::factory()
+            ->for($user->currentTeam->bucket)
+            ->for($postRecording, 'parent')
+            ->comment(['content' => '<p>Old content</p>'])
+            ->create();
 
         $this->actingAs($user)
             ->put(route('comments.update', $commentRecording))
@@ -107,26 +82,18 @@ class UpdateCommentTest extends TestCase
     {
         $user = User::factory()->withPersonalTeam()->create();
 
-        $post = Comment::factory()->create();
+        $postRecording = Recording::factory()
+            ->for($user->currentTeam->bucket)
+            ->for($user, 'creator')
+            ->post()
+            ->create();
 
-        $postRecording = Recording::factory()->create([
-            'bucket_id' => $user->currentTeam->bucket,
-            'creator_id' => $user,
-            'recordable_type' => $post->getMorphClass(),
-            'recordable_id' => $post->getKey(),
-        ]);
-
-        $comment = Comment::factory()->create([
-            'content' => '<p>Old content</p>',
-        ]);
-
-        $commentRecording = Recording::factory()->create([
-            'bucket_id' => $user->currentTeam->bucket,
-            'creator_id' => $user,
-            'parent_id' => $postRecording,
-            'recordable_type' => $comment->getMorphClass(),
-            'recordable_id' => $comment->getKey(),
-        ]);
+        $commentRecording = Recording::factory()
+            ->for($user->currentTeam->bucket)
+            ->for($user, 'creator')
+            ->for($postRecording, 'parent')
+            ->comment(['content' => '<p>Old content</p>'])
+            ->create();
 
         $this->actingAs($user)
             ->put(route('comments.update', $commentRecording), [
@@ -142,26 +109,18 @@ class UpdateCommentTest extends TestCase
     {
         $user = User::factory()->withPersonalTeam()->create();
 
-        $post = Comment::factory()->create();
+        $postRecording = Recording::factory()
+            ->for($user->currentTeam->bucket)
+            ->for($user, 'creator')
+            ->post()
+            ->create();
 
-        $postRecording = Recording::factory()->create([
-            'bucket_id' => $user->currentTeam->bucket,
-            'creator_id' => $user,
-            'recordable_type' => $post->getMorphClass(),
-            'recordable_id' => $post->getKey(),
-        ]);
-
-        $comment = Comment::factory()->create([
-            'content' => '<p>Old content</p>',
-        ]);
-
-        $commentRecording = Recording::factory()->create([
-            'bucket_id' => $user->currentTeam->bucket,
-            'creator_id' => $user,
-            'parent_id' => $postRecording,
-            'recordable_type' => $comment->getMorphClass(),
-            'recordable_id' => $comment->getKey(),
-        ]);
+        $commentRecording = Recording::factory()
+            ->for($user->currentTeam->bucket)
+            ->for($user, 'creator')
+            ->for($postRecording, 'parent')
+            ->comment(['content' => '<p>Old content</p>'])
+            ->create();
 
         $this->actingAs($user)
             ->put(route('comments.update', $commentRecording), [

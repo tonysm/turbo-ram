@@ -12,15 +12,10 @@ class ViewPostTest extends TestCase
     /** @test */
     public function must_be_from_same_team_as_bucket_to_view_post()
     {
-        $post = Post::factory()->create([
+        $recording = Recording::factory()->post([
             'title' => 'Hello Post',
             'content' => '<p>Content stuff!</p>',
-        ]);
-
-        $recording = Recording::factory()->create([
-            'recordable_id' => $post->getKey(),
-            'recordable_type' => $post->getMorphClass(),
-        ]);
+        ])->create();
 
         $user = User::factory()->withPersonalTeam()->create();
 
@@ -34,17 +29,14 @@ class ViewPostTest extends TestCase
     {
         $user = User::factory()->withPersonalTeam()->create();
 
-        $post = Post::factory()->create([
-            'title' => 'Hello Post',
-            'content' => '<p>Content stuff!</p>',
-        ]);
-
-        $recording = Recording::factory()->create([
-            'bucket_id' => $user->currentTeam->bucket,
-            'creator_id' => $user,
-            'recordable_id' => $post->getKey(),
-            'recordable_type' => $post->getMorphClass(),
-        ]);
+        $recording = Recording::factory()
+            ->for($user->currentTeam->bucket)
+            ->for($user, 'creator')
+            ->post([
+                'title' => 'Hello Post',
+                'content' => '<p>Content stuff!</p>',
+            ])
+            ->create();
 
         $this->actingAs($user)
             ->get(route('buckets.posts.show', [$user->currentTeam->bucket, $recording]))

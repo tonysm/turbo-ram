@@ -15,10 +15,7 @@ class ListCommentsTest extends TestCase
     public function must_be_from_same_team_as_recording_to_see_comments()
     {
         $user = User::factory()->withPersonalTeam()->create();
-
-        $bucket = Bucket::factory()->create();
-        $post = Post::factory()->create();
-        $recording = Recording::factory()->for($bucket)->for($post, 'recordable')->create();
+        $recording = Recording::factory()->post()->create();
 
         $this->actingAs($user)
             ->get(route('recordings.comments.index', $recording))
@@ -30,22 +27,17 @@ class ListCommentsTest extends TestCase
     {
         $user = User::factory()->withPersonalTeam()->create();
 
-        $post = Post::factory()->create();
-
         $recording = Recording::factory()
             ->for($user->currentTeam->bucket)
-            ->for($post, 'recordable')
+            ->post()
             ->create();
 
-        $comments = Comment::factory()->times(3)->create();
-
-        $commentsRecordings = $comments->map(fn ($comment) => (
-            Recording::factory()
-                ->for($user->currentTeam->bucket)
-                ->for($comment, 'recordable')
-                ->for($recording, 'parent')
-                ->create()
-        ));
+        $commentsRecordings = Recording::factory()
+            ->times(3)
+            ->for($user->currentTeam->bucket)
+            ->for($recording, 'parent')
+            ->comment()
+            ->create();
 
         $this->actingAs($user)
             ->get(route('recordings.comments.index', $recording))

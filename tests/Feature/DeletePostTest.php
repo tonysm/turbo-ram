@@ -14,16 +14,13 @@ class DeletePostTest extends TestCase
     {
         $user = User::factory()->withPersonalTeam()->create();
 
-        $post = Post::factory()->create([
-            'title' => 'Old title',
-            'content' => '<p>Old Content</p>',
-        ]);
-
-        $recording = Recording::factory()->create([
-            'bucket_id' => $user->currentTeam->bucket,
-            'recordable_id' => $post->getKey(),
-            'recordable_type' => $post->getMorphClass(),
-        ]);
+        $recording = Recording::factory()
+            ->for($user->currentTeam->bucket)
+            ->post([
+                'title' => 'Old title',
+                'content' => '<p>Old Content</p>',
+            ])
+            ->create();
 
         $this->actingAs($user)
             ->delete(route('buckets.posts.destroy', [$user->currentTeam->bucket, $recording]))
@@ -37,17 +34,14 @@ class DeletePostTest extends TestCase
     {
         $user = User::factory()->withPersonalTeam()->create();
 
-        $post = Post::factory()->create([
-            'title' => 'Old title',
-            'content' => '<p>Old Content</p>',
-        ]);
-
-        $recording = Recording::factory()->create([
-            'bucket_id' => $user->currentTeam->bucket,
-            'creator_id' => $user,
-            'recordable_id' => $post->getKey(),
-            'recordable_type' => $post->getMorphClass(),
-        ]);
+        $recording = Recording::factory()
+            ->for($user->currentTeam->bucket)
+            ->for($user, 'creator')
+            ->post([
+                'title' => 'Old title',
+                'content' => '<p>Old Content</p>',
+            ])
+            ->create();
 
         $this->actingAs($user)
             ->delete(route('buckets.posts.destroy', [$user->currentTeam->bucket, $recording]))

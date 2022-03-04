@@ -14,13 +14,7 @@ class CreateCommentTest extends TestCase
    public function must_be_from_same_team_to_view_create_comment_form()
    {
         $user = User::factory()->withPersonalTeam()->create();
-
-        $post = Post::factory()->create();
-
-        $recording = Recording::factory()->create([
-            'recordable_type' => $post->getMorphClass(),
-            'recordable_id' => $post->getKey(),
-        ]);
+        $recording = Recording::factory()->post()->create();
 
         $this->actingAs($user)
             ->get(route('recordings.comments.create', [$recording]))
@@ -31,14 +25,7 @@ class CreateCommentTest extends TestCase
    public function can_view_create_comment_form()
    {
         $user = User::factory()->withPersonalTeam()->create();
-
-        $post = Post::factory()->create();
-
-        $recording = Recording::factory()->create([
-            'bucket_id' => $user->currentTeam->bucket,
-            'recordable_type' => $post->getMorphClass(),
-            'recordable_id' => $post->getKey(),
-        ]);
+        $recording = Recording::factory()->post()->for($user->currentTeam->bucket)->create();
 
         $this->actingAs($user)
             ->get(route('recordings.comments.create', [$recording]))
@@ -49,13 +36,7 @@ class CreateCommentTest extends TestCase
     public function must_be_from_same_team_as_bucket_to_comment_on_recording()
     {
         $user = User::factory()->withPersonalTeam()->create();
-
-        $post = Post::factory()->create();
-
-        $recording = Recording::factory()->create([
-            'recordable_type' => $post->getMorphClass(),
-            'recordable_id' => $post->getKey(),
-        ]);
+        $recording = Recording::factory()->post()->create();
 
         $this->actingAs($user)
             ->post(route('recordings.comments.store', [$recording]), [
@@ -68,14 +49,7 @@ class CreateCommentTest extends TestCase
     public function validates_comment_data()
     {
         $user = User::factory()->withPersonalTeam()->create();
-
-        $post = Post::factory()->create();
-
-        $recording = Recording::factory()->create([
-            'bucket_id' => $user->currentTeam->bucket,
-            'recordable_type' => $post->getMorphClass(),
-            'recordable_id' => $post->getKey(),
-        ]);
+        $recording = Recording::factory()->post()->for($user->currentTeam->bucket)->create();
 
         $this->actingAs($user)
             ->post(route('recordings.comments.store', [$recording]), [
@@ -88,14 +62,7 @@ class CreateCommentTest extends TestCase
     public function can_create_comment_on_recording()
     {
         $user = User::factory()->withPersonalTeam()->create();
-
-        $post = Post::factory()->create();
-
-        $recording = Recording::factory()->create([
-            'bucket_id' => $user->currentTeam->bucket,
-            'recordable_type' => $post->getMorphClass(),
-            'recordable_id' => $post->getKey(),
-        ]);
+        $recording = Recording::factory()->post()->for($user->currentTeam->bucket)->create();
 
         $response = $this->actingAs($user)
             ->post(route('recordings.comments.store', [$recording]), [

@@ -30,32 +30,25 @@ class ListPostsTest extends TestCase
     {
         $user = User::factory()->withPersonalTeam()->create();
 
-        $posts = Post::factory()->times(2)->create();
-
-        $postRecordings = $posts->map(fn ($post) => (
-            Recording::factory()
-                ->for($post, 'recordable')
-                ->for($user, 'creator')
-                ->for($user->currentTeam->bucket, 'bucket')
-                ->create()
-        ));
+        $postRecordings = Recording::factory()
+            ->times(2)
+            ->for($user, 'creator')
+            ->for($user->currentTeam->bucket, 'bucket')
+            ->post()
+            ->create();
 
         // Comments on the same bucket recordings for noise...
         $postRecordings->each(fn ($recording) => (
             Recording::factory()
-                ->for(Comment::factory(), 'recordable')
                 ->for($recording->bucket, 'bucket')
                 ->for($user, 'creator')
                 ->for($recording, 'parent')
+                ->comment()
                 ->create()
         ));
 
         // Recordings from other buckets for noise...
-        Post::factory()->times(2)->create()->each(fn ($post) => (
-            Recording::factory()
-                ->for($post, 'recordable')
-                ->create()
-        ));
+        Recording::factory()->times(2)->post()->create();
 
         $this->actingAs($user)
             ->get(route('buckets.posts.index', $user->currentTeam->bucket))

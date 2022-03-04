@@ -14,8 +14,7 @@ class DeleteCommentTest extends TestCase
     public function only_author_can_delete_their_comments()
     {
         $user = User::factory()->withPersonalTeam()->create();
-        $comment = Comment::factory()->create();
-        $recording = Recording::factory()->for($comment, 'recordable')->create();
+        $recording = Recording::factory()->comment()->create();
 
         $this->actingAs($user)
             ->delete(route('comments.destroy', $recording))
@@ -29,18 +28,14 @@ class DeleteCommentTest extends TestCase
     {
         $user = User::factory()->withPersonalTeam()->create();
 
-        $post = Post::factory()->create();
-
         $postRecording = Recording::factory()
-            ->for($post, 'recordable')
+            ->post()
             ->for($user->currentTeam->bucket, 'bucket')
             ->for($user, 'creator')
             ->create();
 
-        $comment = Comment::factory()->create();
-
         $commentRecording = Recording::factory()
-            ->for($comment, 'recordable')
+            ->comment()
             ->for($user->currentTeam->bucket, 'bucket')
             ->for($user, 'creator')
             ->for($postRecording, 'parent')
