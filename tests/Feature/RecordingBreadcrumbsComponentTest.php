@@ -35,7 +35,7 @@ class RecordingBreadcrumbsComponentTest extends TestCase
 
         $commentRecording = Recording::factory()->create([
             'bucket_id' => $team->bucket,
-            'parent_recording_id' => $postRecording,
+            'parent_id' => $postRecording,
             'recordable_type' => $comment->getMorphClass(),
             'recordable_id' => $comment->getKey(),
         ]);

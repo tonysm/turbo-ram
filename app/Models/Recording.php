@@ -27,7 +27,7 @@ class Recording extends Model
         return $this->belongsTo(Bucket::class);
     }
 
-    public function parentRecording()
+    public function parent()
     {
         return $this->belongsTo(Recording::class);
     }
@@ -44,7 +44,7 @@ class Recording extends Model
 
     public function children()
     {
-        return $this->hasMany(Recording::class, 'parent_recording_id');
+        return $this->hasMany(Recording::class, 'parent_id');
     }
 
     public function setBucketAttribute(Bucket $bucket)
@@ -52,11 +52,11 @@ class Recording extends Model
         $this->bucket()->associate($bucket);
     }
 
-    public function setParentRecordingAttribute(?Recording $parent)
+    public function setParentAttribute(?Recording $parent)
     {
         if (! $parent) return;
 
-        $this->parentRecording()->associate($parent);
+        $this->parent()->associate($parent);
     }
 
     public function setCreatorAttribute(User $creator)
@@ -86,7 +86,7 @@ class Recording extends Model
         $parents = collect();
         $current = $this;
 
-        while ($current = $current->parentRecording) {
+        while ($current = $current->parent) {
             $parents->add($current);
         }
 
@@ -120,7 +120,7 @@ class Recording extends Model
     {
         return route('buckets.posts.show', array_replace($options, [
             'bucket' => $this->bucket,
-            'recording' => $this->parentRecording,
+            'recording' => $this->parent,
             $this->pageFragmentId(),
         ]));
     }

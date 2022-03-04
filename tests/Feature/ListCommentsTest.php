@@ -43,7 +43,7 @@ class ListCommentsTest extends TestCase
             Recording::factory()
                 ->for($user->currentTeam->bucket)
                 ->for($comment, 'recordable')
-                ->for($recording, 'parentRecording')
+                ->for($recording, 'parent')
                 ->create()
         ));
 

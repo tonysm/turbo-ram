@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('recordings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('bucket_id')->constrained();
-            $table->foreignId('parent_recording_id')->nullable()->constrained('recordings');
+            $table->foreignId('parent_id')->nullable()->constrained('recordings');
             $table->foreignId('creator_id')->constrained('users');
             $table->morphs('recordable');
             $table->string('status');

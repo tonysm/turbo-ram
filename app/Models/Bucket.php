@@ -40,7 +40,7 @@ class Bucket extends Model
 
             $options = array_merge($options, [
                 'recordable' => $recordable,
-                'parent_recording' => $parent,
+                'parent' => $parent,
                 'status' => $status,
                 'creator' => $creator,
             ]);

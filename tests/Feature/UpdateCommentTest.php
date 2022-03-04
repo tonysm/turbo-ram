@@ -29,7 +29,7 @@ class UpdateCommentTest extends TestCase
 
         $commentRecording = Recording::factory()->create([
             'bucket_id' => $user->currentTeam->bucket,
-            'parent_recording_id' => $postRecording,
+            'parent_id' => $postRecording,
             'recordable_type' => $comment->getMorphClass(),
             'recordable_id' => $comment->getKey(),
         ]);
@@ -60,7 +60,7 @@ class UpdateCommentTest extends TestCase
         $commentRecording = Recording::factory()->create([
             'bucket_id' => $user->currentTeam->bucket,
             'creator_id' => $user,
-            'parent_recording_id' => $postRecording,
+            'parent_id' => $postRecording,
             'recordable_type' => $comment->getMorphClass(),
             'recordable_id' => $comment->getKey(),
         ]);
@@ -90,7 +90,7 @@ class UpdateCommentTest extends TestCase
 
         $commentRecording = Recording::factory()->create([
             'bucket_id' => $user->currentTeam->bucket,
-            'parent_recording_id' => $postRecording,
+            'parent_id' => $postRecording,
             'recordable_type' => $comment->getMorphClass(),
             'recordable_id' => $comment->getKey(),
         ]);
@@ -123,7 +123,7 @@ class UpdateCommentTest extends TestCase
         $commentRecording = Recording::factory()->create([
             'bucket_id' => $user->currentTeam->bucket,
             'creator_id' => $user,
-            'parent_recording_id' => $postRecording,
+            'parent_id' => $postRecording,
             'recordable_type' => $comment->getMorphClass(),
             'recordable_id' => $comment->getKey(),
         ]);
@@ -158,7 +158,7 @@ class UpdateCommentTest extends TestCase
         $commentRecording = Recording::factory()->create([
             'bucket_id' => $user->currentTeam->bucket,
             'creator_id' => $user,
-            'parent_recording_id' => $postRecording,
+            'parent_id' => $postRecording,
             'recordable_type' => $comment->getMorphClass(),
             'recordable_id' => $comment->getKey(),
         ]);

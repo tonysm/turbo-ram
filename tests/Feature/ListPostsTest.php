@@ -46,7 +46,7 @@ class ListPostsTest extends TestCase
                 ->for(Comment::factory(), 'recordable')
                 ->for($recording->bucket, 'bucket')
                 ->for($user, 'creator')
-                ->for($recording, 'parentRecording')
+                ->for($recording, 'parent')
                 ->create()
         ));
 

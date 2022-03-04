@@ -28,7 +28,7 @@ class RecordingCommentsController extends Controller
         return view('recording_comments.create', [
             'recording' => tap($recording->bucket->recordings()->make(), function ($commentRecording) use ($request, $recording) {
                 $commentRecording->setRelation('recordable', $this->newComment($request, required: false));
-                $commentRecording->setRelation('parentRecording', $recording);
+                $commentRecording->setRelation('parent', $recording);
             }),
         ]);
     }

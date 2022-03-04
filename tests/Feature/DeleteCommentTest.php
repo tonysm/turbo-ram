@@ -43,7 +43,7 @@ class DeleteCommentTest extends TestCase
             ->for($comment, 'recordable')
             ->for($user->currentTeam->bucket, 'bucket')
             ->for($user, 'creator')
-            ->for($postRecording, 'parentRecording')
+            ->for($postRecording, 'parent')
             ->create();
 
         $this->actingAs($user)

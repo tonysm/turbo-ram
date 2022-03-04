@@ -47,7 +47,7 @@ class CommentsController extends Controller
 
         $recording->delete();
 
-        return redirect($recording->parentRecording->recordableShowPath())->with([
+        return redirect($recording->parent->recordableShowPath())->with([
             'status' => __('Comment was deleted!'),
         ]);
     }
