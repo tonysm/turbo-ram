@@ -6,7 +6,7 @@
             </h2>
 
             <div>
-                <a href="{{ route('buckets.posts.edit', [$recording->bucket, $recording]) }}">Edit</a>
+                <a href="{{ route('buckets.posts.edit', [$recording->bucket, $recording]) }}" data-turbo-frame="@domid($recording)">Edit</a>
             </div>
         </div>
     </x-slot>
