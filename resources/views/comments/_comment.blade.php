@@ -5,7 +5,15 @@
                 {{ $recording->creator->name }}
             </span>
 
-            <relative-time datetime="{{ $recording->created_at->toIso8601String() }}">{{ $recording->created_at->toFormattedDateString() }}</relative-time>
+            <div class="flex items-center justify-center space-x-2">
+                <relative-time datetime="{{ $recording->created_at->toIso8601String() }}">
+                    {{ $recording->created_at->toFormattedDateString() }}
+                </relative-time>
+
+                @unless ($recording->created_at->eq($recording->updated_at))
+                <span class="text-sm text-gray-400">(edited)</span>
+                @endif
+            </div>
         </div>
 
         <div class="w-5/6 text-lg">
