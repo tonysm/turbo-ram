@@ -9,6 +9,7 @@ Todo Web:
 - [x] List Comments
 - [x] Update a Comment
 - [x] Delete a Comment
+- [x] Use Turbo Frames and Streams
 - [ ] React to a Post
 - [ ] Sanitize HTML from Documents (Posts and comments)
 - [ ] Record all Activity on a Bucket
