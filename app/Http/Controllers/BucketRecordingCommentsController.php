@@ -40,13 +40,19 @@ class BucketRecordingCommentsController extends Controller
     {
         $this->authorize('addComment', $recording);
 
-        $commendRecording = $recording->bucket->record(
+        $commentRecording = $recording->bucket->record(
             $this->newComment($request),
             parent: $recording,
         );
 
-        return redirect($commendRecording->recordableShowPath())
-            ->withFragment((string) str($commendRecording->pageFragmentId())->after('#'))
+        if ($request->wantsTurboStream()) {
+            return response()->turboStreamView('recording_comments.turbo.created', [
+                'recording' => $commentRecording,
+            ]);
+        }
+
+        return redirect($commentRecording->recordableShowPath())
+            ->withFragment((string) str($commentRecording->pageFragmentId())->after('#'))
             ->with('status', 'Comment was created!');
     }
 

@@ -9,9 +9,11 @@
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
                 <div class="p-8 sm:px-20">
-                    @include('recording_comments._comment_form', [
-                        'recording' => $recording,
-                    ])
+                    <x-turbo-frame :id="[$recording->parent, 'create_comment']" target="_top" class="block w-full">
+                        @include('recording_comments._comment_form', [
+                            'recording' => $recording,
+                        ])
+                    </x-turbo-frame>
                 </div>
             </div>
         </div>

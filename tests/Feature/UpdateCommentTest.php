@@ -6,9 +6,16 @@ use App\Models\Bucket;
 use App\Models\Recording;
 use App\Models\User;
 use Tests\TestCase;
+use Tonysm\TurboLaravel\Testing\AssertableTurboStream;
+use Tonysm\TurboLaravel\Testing\InteractsWithTurbo;
+use Tonysm\TurboLaravel\Testing\TurboStreamMatcher;
+
+use function Tonysm\TurboLaravel\dom_id;
 
 class UpdateCommentTest extends TestCase
 {
+    use InteractsWithTurbo;
+
     private User $user;
     private Bucket $bucket;
     private Recording $blog;
@@ -101,6 +108,28 @@ class UpdateCommentTest extends TestCase
                 'post' => $this->post,
                 $this->comment->pageFragmentId(),
             ]));
+
+        $this->assertStringContainsString('<p>Updated content</p>', (string) $this->comment->refresh()->recordable->content);
+    }
+
+    /** @test */
+    public function update_comment_with_turbo()
+    {
+        $this->actingAs($this->user)
+            ->turbo()
+            ->put(route('buckets.comments.update', [$this->bucket, $this->comment]), [
+                'content' => '<p>Updated content</p>',
+            ])
+            ->assertValid()
+            ->assertTurboStream(fn (AssertableTurboStream $streams) => (
+                $streams->has(1)
+                    ->hasTurboStream(fn (TurboStreamMatcher $stream) => (
+                        $stream
+                            ->where('target', dom_id($this->comment))
+                            ->where('action', 'replace')
+                            ->see('Updated content')
+                    ))
+            ));
 
         $this->assertStringContainsString('<p>Updated content</p>', (string) $this->comment->refresh()->recordable->content);
     }

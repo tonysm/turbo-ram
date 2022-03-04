@@ -39,6 +39,10 @@ class BucketCommentsController extends Controller
             'recordable' => tap($this->newComment($request))->save(),
         ]);
 
+        if ($request->wantsTurboStream()) {
+            return response()->turboStream($comment);
+        }
+
         return redirect($comment->recordableShowPath())
             ->withFragment($comment->pageFragmentId())
             ->with(['status' => __('Comment was updated!')]);
