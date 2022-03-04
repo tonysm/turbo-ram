@@ -6,7 +6,7 @@
     </div>
 @endif
 
-<form method="POST" action="{{ $recording->exists ? route('comments.update', $recording) : route('recordings.comments.store', $recording->parent) }}">
+<form method="POST" action="{{ $recording->exists ? route('buckets.comments.update', [$recording->bucket, $recording]) : route('buckets.recordings.comments.store', [$recording->bucket, $recording->parent]) }}">
     @csrf
 
     @if ($recording->exists)

@@ -22,10 +22,12 @@ class DatabaseSeeder extends Seeder
             'email' => 'tonysm@hey.com',
         ]);
 
-        Post::factory()->times(20)->create()->each(fn ($post) => Recording::factory()
+        Recording::factory()
+            ->times(20)
             ->for($user->currentTeam->bucket, 'bucket')
             ->for($user, 'creator')
-            ->for($post, 'recordable')
-            ->create());
+            ->for($user->currentTeam->bucket->recordings()->blog()->firstOrFail(), 'parent')
+            ->post()
+            ->create();
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Post;
 use App\Models\Recording;
 use App\Models\User;
 use Tests\TestCase;
@@ -16,6 +15,7 @@ class DeletePostTest extends TestCase
 
         $recording = Recording::factory()
             ->for($user->currentTeam->bucket)
+            ->for(Recording::factory()->blog()->for($user->currentTeam->bucket), 'parent')
             ->post([
                 'title' => 'Old title',
                 'content' => '<p>Old Content</p>',
@@ -37,6 +37,7 @@ class DeletePostTest extends TestCase
         $recording = Recording::factory()
             ->for($user->currentTeam->bucket)
             ->for($user, 'creator')
+            ->for(Recording::factory()->blog()->for($user->currentTeam->bucket), 'parent')
             ->post([
                 'title' => 'Old title',
                 'content' => '<p>Old Content</p>',
@@ -45,7 +46,7 @@ class DeletePostTest extends TestCase
 
         $this->actingAs($user)
             ->delete(route('buckets.posts.destroy', [$user->currentTeam->bucket, $recording]))
-            ->assertRedirect(route('dashboard'));
+            ->assertRedirect(route('buckets.blogs.show', [$user->currentTeam->bucket, $recording->parent]));
 
         $this->assertModelMissing($recording);
     }

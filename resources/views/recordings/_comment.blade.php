@@ -12,7 +12,7 @@
     <div class="mt-2 flex space-x-8">
         <div class="w-1/6">&nbsp;</div>
         <div class="w-5/6 opacity-0 transition transform group-hover:opacity-100">
-            <a href="{{ route('comments.edit', $recording) }}">Edit</a>
+            <a href="{{ route('buckets.comments.edit', [$recording->bucket, $recording]) }}">Edit</a>
         </div>
     </div>
 </div>

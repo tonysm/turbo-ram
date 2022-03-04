@@ -2,8 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Comment;
-use App\Models\Post;
 use App\Models\Recording;
 use App\Models\User;
 use Tests\TestCase;
@@ -17,7 +15,7 @@ class DeleteCommentTest extends TestCase
         $recording = Recording::factory()->comment()->create();
 
         $this->actingAs($user)
-            ->delete(route('comments.destroy', $recording))
+            ->delete(route('buckets.comments.destroy', [$recording->bucket, $recording]))
             ->assertForbidden();
 
         $this->assertModelExists($recording);
@@ -42,10 +40,10 @@ class DeleteCommentTest extends TestCase
             ->create();
 
         $this->actingAs($user)
-            ->delete(route('comments.destroy', $commentRecording))
+            ->delete(route('buckets.comments.destroy', [$commentRecording->bucket, $commentRecording]))
             ->assertRedirect(route('buckets.posts.show', [
                 'bucket' => $user->currentTeam->bucket,
-                'recording' => $postRecording,
+                'post' => $postRecording,
             ]));
 
         $this->assertModelMissing($commentRecording);

@@ -22,6 +22,16 @@ class Recording extends Model
         $query->where('recordable_type', (new Comment())->getMorphClass());
     }
 
+    public function scopeBlog(Builder $query): void
+    {
+        $query->where('recordable_type', (new Blog())->getMorphClass());
+    }
+
+    public function scopeDock(Builder $query): void
+    {
+        $query->where('recordable_type', (new Dock())->getMorphClass());
+    }
+
     public function bucket()
     {
         return $this->belongsTo(Bucket::class);
@@ -112,7 +122,7 @@ class Recording extends Model
     {
         return route('buckets.posts.show', array_replace($options, [
             'bucket' => $this->bucket,
-            'recording' => $this,
+            'post' => $this,
         ]));
     }
 
@@ -120,7 +130,7 @@ class Recording extends Model
     {
         return route('buckets.posts.show', array_replace($options, [
             'bucket' => $this->bucket,
-            'recording' => $this->parent,
+            'post' => $this->parent,
             $this->pageFragmentId(),
         ]));
     }

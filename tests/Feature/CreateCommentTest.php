@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Models\Comment;
-use App\Models\Post;
 use App\Models\Recording;
 use App\Models\User;
 use Tests\TestCase;
@@ -17,7 +16,7 @@ class CreateCommentTest extends TestCase
         $recording = Recording::factory()->post()->create();
 
         $this->actingAs($user)
-            ->get(route('recordings.comments.create', [$recording]))
+            ->get(route('buckets.recordings.comments.create', [$recording->bucket, $recording]))
             ->assertForbidden();
    }
 
@@ -28,7 +27,7 @@ class CreateCommentTest extends TestCase
         $recording = Recording::factory()->post()->for($user->currentTeam->bucket)->create();
 
         $this->actingAs($user)
-            ->get(route('recordings.comments.create', [$recording]))
+            ->get(route('buckets.recordings.comments.create', [$recording->bucket, $recording]))
             ->assertOk();
    }
 
@@ -39,7 +38,7 @@ class CreateCommentTest extends TestCase
         $recording = Recording::factory()->post()->create();
 
         $this->actingAs($user)
-            ->post(route('recordings.comments.store', [$recording]), [
+            ->post(route('buckets.recordings.comments.store', [$recording->bucket, $recording]), [
                 'content' => '<p>So good!</p>',
             ])
             ->assertForbidden();
@@ -52,7 +51,7 @@ class CreateCommentTest extends TestCase
         $recording = Recording::factory()->post()->for($user->currentTeam->bucket)->create();
 
         $this->actingAs($user)
-            ->post(route('recordings.comments.store', [$recording]), [
+            ->post(route('buckets.recordings.comments.store', [$recording->bucket, $recording]), [
                 'content' => '',
             ])
             ->assertInvalid(['content']);
@@ -65,7 +64,7 @@ class CreateCommentTest extends TestCase
         $recording = Recording::factory()->post()->for($user->currentTeam->bucket)->create();
 
         $response = $this->actingAs($user)
-            ->post(route('recordings.comments.store', [$recording]), [
+            ->post(route('buckets.recordings.comments.store', [$recording->bucket, $recording]), [
                 'content' => '<p>So good!</p>',
             ])
             ->assertRedirect();
@@ -80,7 +79,7 @@ class CreateCommentTest extends TestCase
 
         $response->assertRedirect(route('buckets.posts.show', [
             'bucket' => $recording->bucket,
-            'recording' => $recording,
+            'post' => $recording,
             $recording->children->first()->pageFragmentId(),
         ]));
     }

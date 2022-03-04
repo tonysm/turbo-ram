@@ -2,23 +2,47 @@
 
 namespace Tests\Feature;
 
+use App\Models\Bucket;
 use App\Models\Post;
 use App\Models\Recording;
 use App\Models\User;
+use Illuminate\Http\Response;
 use Tests\TestCase;
 
 class UpdatePostsTest extends TestCase
 {
+    private User $user;
+    private Bucket $bucket;
+    private Recording $blog;
+    private Recording $post;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = User::factory()->withPersonalTeam()->create();
+        $this->bucket = $this->user->currentTeam->bucket;
+        $this->blog = $this->bucket->recordings()->blog()->firstOrFail();
+
+        $this->post = Recording::factory()
+            ->for($this->bucket)
+            ->for($this->user, 'creator')
+            ->for($this->blog, 'parent')
+            ->post([
+                'title' => 'Old Title',
+                'content' => '<p>Old content</p>',
+            ])
+            ->create();
+    }
+
     /** @test */
     public function only_authors_can_view_the_form_to_edit_their_posts()
     {
-        $user = User::factory()->withPersonalTeam()->create();
+        // Recording from another user in the bucket...
+        $post = Recording::factory()->for($this->bucket)->post()->create();
 
-        // Recording from another user in the bucket/team...
-        $recording = Recording::factory()->for($user->currentTeam->bucket)->create();
-
-        $this->actingAs($user)
-            ->get(route('buckets.posts.edit', [$user->currentTeam->bucket, $recording]))
+        $this->actingAs($this->user)
+            ->get(route('buckets.posts.edit', [$this->bucket, $post]))
             ->assertForbidden();
     }
 
@@ -58,55 +82,34 @@ class UpdatePostsTest extends TestCase
      */
     public function validates_post_payload($payload, $expectedInvalidFields)
     {
-        $user = User::factory()->withPersonalTeam()->create();
-
-        $recording = Recording::factory()
-            ->for($user->currentTeam->bucket)
-            ->for($user, 'creator')
-            ->post()
-            ->create();
-
-        $this->actingAs($user)
-            ->put(route('buckets.posts.update', [$user->currentTeam->bucket, $recording]), value($payload))
+        $this->actingAs($this->user)
+            ->put(route('buckets.posts.update', [$this->bucket, $this->post]), value($payload))
             ->assertInvalid($expectedInvalidFields);
     }
 
     /** @test */
     public function updates_post()
     {
-        $user = User::factory()->withPersonalTeam()->create();
-
-        $recording = Recording::factory()
-            ->for($user->currentTeam->bucket)
-            ->for($user, 'creator')
-            ->post([
-                'title' => 'Old title',
-                'content' => '<p>Old Content</p>',
-            ])
-            ->create();
-
-        $this->actingAs($user)
-            ->put(route('buckets.posts.update', [$user->currentTeam->bucket, $recording]), [
+        $this->actingAs($this->user)
+            ->put(route('buckets.posts.update', [$this->bucket, $this->post]), [
                 'title' => 'Updated title',
                 'content' => '<p>Updated Content</p>',
             ])
             ->assertValid()
-            ->assertRedirect(route('buckets.posts.show', [$user->refresh()->currentTeam->bucket, $recording]));
+            ->assertRedirect(route('buckets.posts.show', [$this->bucket, $this->post]));
 
-        $this->assertEquals('Updated title', $recording->refresh()->recordable->title);
-        $this->assertStringContainsString('<p>Updated Content</p>', (string) $recording->recordable->content);
+        $this->assertEquals('Updated title', $this->post->refresh()->recordable->title);
+        $this->assertStringContainsString('<p>Updated Content</p>', (string) $this->post->recordable->content);
     }
 
     /** @test */
     public function only_authors_can_update_their_posts()
     {
-        $user = User::factory()->withPersonalTeam()->create();
-
         // Recording from another user in the bucket/team...
-        $recording = Recording::factory()->for($user->currentTeam->bucket)->create();
+        $post = Recording::factory()->for($this->bucket)->create();
 
-        $this->actingAs($user)
-            ->put(route('buckets.posts.update', [$user->currentTeam->bucket, $recording]), [
+        $this->actingAs($this->user)
+            ->put(route('buckets.posts.update', [$this->bucket, $post]), [
                 'title' => 'Updated title',
                 'content' => '<p>Updated Content</p>',
             ])

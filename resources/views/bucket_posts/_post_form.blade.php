@@ -6,7 +6,14 @@
     </div>
 @endif
 
-<form method="POST" action="{{ $recording->exists ? route('buckets.posts.update', [$recording->bucket, $recording]) : route('buckets.posts.store', $recording->bucket) }}">
+<form
+    method="POST"
+    action="{{
+        $recording->exists
+            ? route('buckets.posts.update', [$recording->bucket, $recording])
+            : route('buckets.blogs.posts.store', [$recording->bucket, $recording->parent])
+    }}"
+>
     @csrf
 
     @if ($recording->exists)
@@ -24,7 +31,7 @@
     </div>
 
     <div class="flex items-center justify-end mt-4">
-        <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ $recording->exists ? route('buckets.posts.show', [$recording->bucket, $recording]) : route('dashboard') }}">
+        <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ $recording->exists ? route('buckets.posts.show', [$recording->bucket, $recording]) : route('buckets.blogs.show', [$recording->bucket, $recording->parent]) }}">
             {{ __('Cancel') }}
         </a>
 

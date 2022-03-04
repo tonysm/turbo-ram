@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Post;
 use App\Models\Recording;
 use App\Models\User;
 use Tests\TestCase;
@@ -32,6 +31,7 @@ class ViewPostTest extends TestCase
         $recording = Recording::factory()
             ->for($user->currentTeam->bucket)
             ->for($user, 'creator')
+            ->for(Recording::factory()->for($user->currentTeam->bucket)->blog(), 'parent')
             ->post([
                 'title' => 'Hello Post',
                 'content' => '<p>Content stuff!</p>',

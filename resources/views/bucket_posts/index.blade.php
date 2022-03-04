@@ -6,7 +6,7 @@
             </h2>
 
             <div>
-                <a href="{{ route('buckets.posts.create', $bucket) }}">New Post</a>
+                <a href="{{ route('buckets.blogs.posts.create', [$bucket, $blog]) }}">New Post</a>
             </div>
         </div>
     </x-slot>
@@ -15,7 +15,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-8 sm:px-20">
-                    <div class="flex flex-col divide-y">
+                    <div class="flex flex-col divide-y divide-gray-100">
                         @each('bucket_posts._post_card', $posts, 'recording')
                     </div>
 

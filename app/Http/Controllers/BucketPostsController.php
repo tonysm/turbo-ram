@@ -9,68 +9,30 @@ use Illuminate\Http\Request;
 
 class BucketPostsController extends Controller
 {
-    public function index(Bucket $bucket)
+    public function show(Request $request, Bucket $bucket, Recording $post)
     {
-        $this->authorize('view', $bucket);
-
-        return view('bucket_posts.index', [
-            'bucket' => $bucket,
-            'posts' => $bucket->recordings()
-                ->posts()
-                ->latest('id')
-                ->cursorPaginate(15),
-        ]);
-    }
-
-    public function create(Request $request, Bucket $bucket)
-    {
-        $this->authorize('addPost', $bucket);
-
-        return view('bucket_posts.create', [
-            'bucket' => $bucket,
-            'recording' => $bucket->recordings()->make()->setRelation('recordable', $this->newPost($request, required: false)),
-        ]);
-    }
-
-    public function show(Request $request, Bucket $bucket, Recording $recording)
-    {
-        $this->authorize('view', $recording);
+        $this->authorize('view', $post);
 
         return view('bucket_posts.show', [
             'bucket' => $bucket,
-            'recording' => tap($recording, function ($recording) use ($request) {
+            'recording' => tap($post, function ($recording) use ($request) {
                 if ($request->old('title') || $request->old('content')) {
                     $recording->setRelation('recordable', $this->newPost($request, required: false));
                 }
             }),
-            'comments' => $recording->children()
-                ->comments()
+            'comments' => $post->children()
                 ->oldest()
                 ->get(),
         ]);
     }
 
-    public function store(Request $request, Bucket $bucket)
+    public function edit(Request $request, Bucket $bucket, Recording $post)
     {
-        $this->authorize('addPost', $bucket);
-
-        $request->validate([
-            'title' => ['required'],
-            'content' => ['required'],
-        ]);
-
-        $recording = $bucket->record($this->newPost($request));
-
-        return redirect()->route('buckets.posts.show', [$bucket, $recording]);
-    }
-
-    public function edit(Request $request, Bucket $bucket, Recording $recording)
-    {
-        $this->authorize('update', $recording);
+        $this->authorize('update', $post);
 
         return view('bucket_posts.edit', [
             'bucket' => $bucket,
-            'recording' => tap($recording, function ($recording) use ($request) {
+            'recording' => tap($post, function ($recording) use ($request) {
                 if ($request->old('title') || $request->old('content')) {
                     $recording->setRelation('recordable', $this->newPost($request, required: false));
                 }
@@ -78,24 +40,26 @@ class BucketPostsController extends Controller
         ]);
     }
 
-    public function update(Request $request, Bucket $bucket, Recording $recording)
+    public function update(Request $request, Bucket $bucket, Recording $post)
     {
-        $this->authorize('update', $recording);
+        $this->authorize('update', $post);
 
-        $recording->update([
+        $post->update([
             'recordable' => tap($this->newPost($request))->save(),
         ]);
 
-        return to_route('buckets.posts.show', [$bucket, $recording]);
+        return to_route('buckets.posts.show', [$bucket, $post]);
     }
 
-    public function destroy(Bucket $bucket, Recording $recording)
+    public function destroy(Bucket $bucket, Recording $post)
     {
-        $this->authorize('destroy', $recording);
+        $this->authorize('destroy', $post);
 
-        $recording->delete();
+        $post->delete();
 
-        return redirect()->route('dashboard')->with('status', 'Post was deleted');
+        return redirect()
+            ->route('buckets.blogs.show', [$bucket, $post->parent])
+            ->with('status', 'Post was deleted');
     }
 
     private function newPost(Request $request, bool $required = true): Post

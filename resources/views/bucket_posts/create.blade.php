@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            <a href="{{ $recording->exists ? route('buckets.posts.show', [$recording->bucket, $recording]) : route('dashboard') }}">&larr; Back to posts</a>
+            <a href="{{ $recording->exists ? route('buckets.blogs.show', [$recording->bucket, $blog]) : route('dashboard') }}">&larr; Back to blog</a>
         </h2>
     </x-slot>
 

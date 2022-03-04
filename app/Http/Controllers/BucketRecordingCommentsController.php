@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bucket;
 use App\Models\Comment;
 use App\Models\Recording;
 use Illuminate\Http\Request;
 
-class RecordingCommentsController extends Controller
+class BucketRecordingCommentsController extends Controller
 {
-    public function index(Recording $recording)
+    public function index(Bucket $bucket, Recording $recording)
     {
         $this->authorize('view', $recording);
 
         return view('recording_comments.index', [
+            'bucket' => $bucket,
             'recording' => $recording,
             'comments' => $recording->children()
                 ->comments()
@@ -21,11 +23,12 @@ class RecordingCommentsController extends Controller
         ]);
     }
 
-    public function create(Request $request, Recording $recording)
+    public function create(Request $request, Bucket $bucket, Recording $recording)
     {
         $this->authorize('addComment', $recording);
 
         return view('recording_comments.create', [
+            'bucket' => $bucket,
             'recording' => tap($recording->bucket->recordings()->make(), function ($commentRecording) use ($request, $recording) {
                 $commentRecording->setRelation('recordable', $this->newComment($request, required: false));
                 $commentRecording->setRelation('parent', $recording);
@@ -33,7 +36,7 @@ class RecordingCommentsController extends Controller
         ]);
     }
 
-    public function store(Request $request, Recording $recording)
+    public function store(Request $request, Bucket $bucket, Recording $recording)
     {
         $this->authorize('addComment', $recording);
 

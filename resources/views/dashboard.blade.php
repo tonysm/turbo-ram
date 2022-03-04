@@ -11,7 +11,7 @@
                 <div class="p-8 sm:px-20">
                     <p class="text-center">You currently have no posts.</p>
                     <p class="mt-4 text-center">
-                        <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('buckets.posts.create', $bucket) }}">
+                        <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('buckets.blogs.posts.create', $bucket) }}">
                             {{ __('New Post') }}
                         </a>
                     </p>

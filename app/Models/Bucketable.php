@@ -7,7 +7,9 @@ trait Bucketable
     public static function bootBucketable()
     {
         static::created(function ($bucketable) {
-            $bucketable->ensureBucketIsCreated();
+            if (Bucket::$autoCreateOnBucketables ?? false) {
+                $bucketable->ensureBucketIsCreated();
+            }
         });
     }
 

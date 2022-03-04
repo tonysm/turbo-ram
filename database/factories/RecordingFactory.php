@@ -2,9 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\Blog;
 use App\Models\Bucket;
 use App\Models\Comment;
 use App\Models\Post;
+use App\Models\Recording;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -27,6 +29,14 @@ class RecordingFactory extends Factory
             'recordable_type' => (new Post())->getMorphClass(),
             'recordable_id' => Post::factory(),
         ];
+    }
+
+    public function blog(array $overrides = [])
+    {
+        return $this->state([
+            'recordable_type' => (new Blog())->getMorphClass(),
+            'recordable_id' => Blog::factory($overrides),
+        ]);
     }
 
     public function post(array $overrides = [])

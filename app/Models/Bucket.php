@@ -11,6 +11,26 @@ class Bucket extends Model
 {
     use HasFactory;
 
+    public static $autoCreateOnBucketables = true;
+
+    public static function booted()
+    {
+        static::created(function (Bucket $bucket) {
+            $bucket->ensureBlogIsCreatedAndDocked();
+        });
+    }
+
+    public static function withoutAutoCreation(callable $scope): mixed
+    {
+        static::$autoCreateOnBucketables = false;
+
+        try {
+            return $scope();
+        } finally {
+            static::$autoCreateOnBucketables = true;
+        }
+    }
+
     public function bucketable()
     {
         return $this->morphTo();
@@ -24,6 +44,12 @@ class Bucket extends Model
     public function recordings()
     {
         return $this->hasMany(Recording::class);
+    }
+
+    public function dock()
+    {
+        return $this->recordings()
+            ->dock();
     }
 
     public function setBucketableAttribute($bucketable)
@@ -51,5 +77,17 @@ class Bucket extends Model
                 }
             });
         });
+    }
+
+    protected function ensureBlogIsCreatedAndDocked(): void
+    {
+        $owner = $this->bucketableTeam()->owner;
+
+        $dock = $this->record(new Dock(), creator: $owner);
+
+        $this->record(new Blog([
+            'name' => 'Blog',
+            'slug' => str($this->bucketableTeam()->name)->slug() . '-' . strtolower(str()->random(6)),
+        ]), creator: $owner, parent: $dock);
     }
 }
