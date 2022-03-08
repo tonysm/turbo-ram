@@ -2,6 +2,10 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+[hidden] {
+    @apply hidden;
+}
+
 /** These are specific for the tag that will be added to the rich text content */
 .trix-content .attachment-gallery > .attachment,
 .trix-content .attachment-gallery > rich-text-attachment {
