@@ -18,3 +18,4 @@ Importmap::pin("@hotwired/turbo", to: "https://ga.jspm.io/npm:@hotwired/turbo@7.
 Importmap::pin("@hotwired/stimulus", to: "https://ga.jspm.io/npm:@hotwired/stimulus@3.0.1/dist/stimulus.js");
 Importmap::pin("trix", to: "https://ga.jspm.io/npm:trix@2.0.0-alpha.1/dist/trix.js");
 Importmap::pin("@github/time-elements", to: "https://ga.jspm.io/npm:@github/time-elements@3.1.2/dist/index.js");
+Importmap::pin("@github/combobox-nav", to: "https://ga.jspm.io/npm:@github/combobox-nav@2.0.2/dist/index.js");

@@ -9,54 +9,54 @@
                         <x-jet-application-mark class="block w-auto h-9" />
                     </a>
 
-                    <div data-controller="search">
+                    <div data-controller="search combobox">
                         <form action="">
-                            <x-jet-input data-search-target="input" type="search" placeholder="Search" data-action="focus->search#openWhenFocused blur->search#closeWhenEmpty" />
+                            <x-jet-input data-combobox-target="input" data-search-target="input" type="search" placeholder="Search" data-action="focus->search#openWhenFocused focus->combobox#start blur->search#closeWhenEmpty" />
                             <x-jet-button hidden>Submit</x-jet-button>
                         </form>
 
                         <turbo-frame hidden data-search-target="results" class="absolute mx-8 left-0 right-0 block w-full overflow-y-auto bg-white min-h-20 max-h-[80vh] border-t shadow rounded-xl top-16">
-                            <ul class="p-8">
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
-                                <li>Lorem</li>
+                            <ul role="listbox" class="p-8" data-combobox-target="listbox">
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
+                                <li role="option">Lorem</li>
                             </ul>
                         </turbo-frame>
                     </div>
