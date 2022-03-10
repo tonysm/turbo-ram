@@ -2,14 +2,17 @@
 
 namespace App\Models;
 
+use App\Models\Events\HasRecordableEvents;
+use App\Models\Events\RecordsEvents;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
-class Post extends Model
+class Post extends Model implements RecordsEvents
 {
     use HasFactory;
     use HasRichText;
+    use HasRecordableEvents;
 
     protected $guarded = [];
     protected $richTextFields = ['content'];

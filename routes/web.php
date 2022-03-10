@@ -9,13 +9,9 @@ Route::get('/', function () {
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
-        if (($team = request()->user()->currentTeam) && $team->bucket->recordings()->blog()->exists()) {
-            return redirect()->route('buckets.blogs.posts.index', [$team->bucket, $team->bucket->recordings()->blog()->first()]);
-        }
-
         return view('dashboard', [
-            'bucket' => $team->bucket,
-            'blog' => $team->bucket->recordings()->blog()->first(),
+            'bucket' => $bucket = auth()->user()->currentTeam->bucket,
+            'blog' => $bucket->recordings()->blog()->first(),
         ]);
     })->name('dashboard');
 

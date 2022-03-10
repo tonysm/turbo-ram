@@ -67,6 +67,10 @@
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
+
+                    <x-jet-nav-link href="{{ route('buckets.blogs.posts.index', [auth()->user()->currentTeam->bucket, auth()->user()->currentTeam->bucket->recordings()->blog()->first()]) }}" :active="request()->routeIs('buckets.blogs.posts.index')">
+                        {{ __('Posts') }}
+                    </x-jet-nav-link>
                 </div>
             </div>
 
@@ -192,6 +196,10 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-jet-responsive-nav-link>
+
+            <x-jet-responsive-nav-link href="{{ route('buckets.blogs.posts.index', [auth()->user()->currentTeam->bucket, auth()->user()->currentTeam->bucket->recordings()->blog()->first()]) }}" :active="request()->routeIs('buckets.blogs.posts.index')">
+                {{ __('Posts') }}
             </x-jet-responsive-nav-link>
         </div>
 

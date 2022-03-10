@@ -52,6 +52,11 @@ class Bucket extends Model
             ->dock();
     }
 
+    public function events()
+    {
+        return $this->hasMany(Event::class)->latest();
+    }
+
     public function setBucketableAttribute($bucketable)
     {
         $this->bucketable()->associate($bucketable);

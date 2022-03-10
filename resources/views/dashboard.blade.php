@@ -1,20 +1,29 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="text-xl font-semibold leading-tight text-gray-800">
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
                 <div class="p-8 sm:px-20">
+                    @if ($bucket->events()->count() == 0)
                     <p class="text-center">You currently have no posts.</p>
+
                     <p class="mt-4 text-center">
-                        <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('buckets.blogs.posts.create', $bucket) }}">
+                        <a class="text-sm text-gray-600 underline hover:text-gray-900" href="{{ route('buckets.blogs.posts.create', [$bucket, $blog]) }}">
                             {{ __('New Post') }}
                         </a>
                     </p>
+                    @else
+                        <ul>
+                            @foreach ($bucket->events as $event)
+                                <li><a href="{{ $event->recording->recordableShowPath() }}">Event: {{ $event->event_type }} | Creator: {{ $event->creator?->name ?: 'Unknown' }}</a></li>
+                            @endforeach
+                        </ul>
+                    @endif
                 </div>
             </div>
         </div>
