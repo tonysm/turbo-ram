@@ -27,16 +27,16 @@ class DeleteCommentTest extends TestCase
         $user = User::factory()->withPersonalTeam()->create();
 
         $postRecording = Recording::factory()
-            ->post()
             ->for($user->currentTeam->bucket, 'bucket')
             ->for($user, 'creator')
+            ->post()
             ->create();
 
         $commentRecording = Recording::factory()
-            ->comment()
             ->for($user->currentTeam->bucket, 'bucket')
             ->for($user, 'creator')
             ->for($postRecording, 'parent')
+            ->comment()
             ->create();
 
         $this->actingAs($user)

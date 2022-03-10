@@ -6,7 +6,6 @@ use App\Models\Blog;
 use App\Models\Bucket;
 use App\Models\Comment;
 use App\Models\Post;
-use App\Models\Recording;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -31,7 +30,7 @@ class RecordingFactory extends Factory
         ];
     }
 
-    public function blog(array $overrides = [])
+    public function blog($overrides = [])
     {
         return $this->state([
             'recordable_type' => (new Blog())->getMorphClass(),
@@ -39,7 +38,7 @@ class RecordingFactory extends Factory
         ]);
     }
 
-    public function post(array $overrides = [])
+    public function post($overrides = [])
     {
         return $this->state([
             'recordable_type' => (new Post())->getMorphClass(),
@@ -47,7 +46,7 @@ class RecordingFactory extends Factory
         ]);
     }
 
-    public function comment(array $overrides = [])
+    public function comment($overrides = [])
     {
         return $this->state([
             'recordable_type' => (new Comment())->getMorphClass(),
