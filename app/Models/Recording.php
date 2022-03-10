@@ -59,6 +59,11 @@ class Recording extends Model
         return $this->hasMany(Recording::class, 'parent_id');
     }
 
+    public function events()
+    {
+        return $this->hasMany(Event::class)->latest();
+    }
+
     public function setBucketAttribute(Bucket $bucket)
     {
         $this->bucket()->associate($bucket);
