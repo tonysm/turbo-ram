@@ -6,7 +6,8 @@
             </h2>
 
             <div>
-                <a href="{{ route('buckets.posts.edit', [$recording->bucket, $recording]) }}" data-turbo-frame="@domid($recording)">Edit</a>
+                <a class="hidden sm:inline" href="{{ route('buckets.posts.edit', [$recording->bucket, $recording]) }}" data-turbo-frame="@domid($recording)">Edit</a>
+                <a class="sm:hidden" href="{{ route('buckets.posts.edit', [$recording->bucket, $recording]) }}">Edit</a>
             </div>
         </div>
     </x-slot>
