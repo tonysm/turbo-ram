@@ -45,7 +45,7 @@ class BucketRecordingCommentsController extends Controller
             parent: $recording,
         );
 
-        if ($request->wantsTurboStream()) {
+        if ($request->wantsTurboStream() && ! $request->wasFromTurboNative()) {
             return response()->turboStreamView('recording_comments.turbo.created', [
                 'recording' => $commentRecording,
             ]);

@@ -39,7 +39,7 @@ class BucketCommentsController extends Controller
             'recordable' => tap($this->newComment($request))->save(),
         ]);
 
-        if ($request->wantsTurboStream()) {
+        if ($request->wantsTurboStream() && ! $request->wasFromTurboNative()) {
             return response()->turboStream($comment);
         }
 
