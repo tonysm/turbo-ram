@@ -4,6 +4,6 @@
     ])
 </x-turbo-stream>
 
-<x-turbo-stream :target="[$recording->parent, 'create_comment']" action="replace">
+<x-turbo-stream :target="[$recording->parent, 'create_comment_trigger']" action="replace">
     @include('recordings._comment_form_trigger', ['recording' => $recording->parent])
 </x-turbo-stream>

@@ -6,14 +6,14 @@
     </div>
 @endif
 
-<form method="POST" action="{{ $recording->exists ? route('buckets.comments.update', [$recording->bucket, $recording]) : route('buckets.recordings.comments.store', [$recording->bucket, $recording->parent]) }}">
+<form method="POST" action="{{ $recording->exists ? route('buckets.comments.update', [$recording->bucket, $recording]) : route('buckets.recordings.comments.store', [$recording->bucket, $recording->parent]) }}" class="w-full">
     @csrf
 
     @if ($recording->exists)
         @method('PUT')
     @endif
 
-    <div class="mt-4">
+    <div>
         <x-jet-label for="content" value="{{ __('Content') }}" />
         <x-trix id="content" class="block w-full mt-1" name="content" autofocus autocomplete="off" :value="old('content', $recording->recordable->content->toTrixHtml())" />
     </div>
