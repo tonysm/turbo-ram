@@ -1,4 +1,5 @@
 <x-app-layout>
+    <x-slot name="title">{{ __('Create Comment') }}</x-slot>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
             <a href="{{ route('buckets.posts.show', [$recording->parent->bucket, $recording->parent]) }}">&larr; Back to post #{{ $recording->parent->id }}</a>

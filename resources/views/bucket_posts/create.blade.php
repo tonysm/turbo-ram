@@ -1,4 +1,6 @@
 <x-app-layout>
+    <x-slot name="title">{{ __('Create Post') }}</x-slot>
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             <a href="{{ $recording->exists ? route('buckets.blogs.show', [$recording->bucket, $blog]) : route('dashboard') }}">&larr; Back to blog</a>

@@ -1,4 +1,6 @@
 <x-app-layout>
+    <x-slot name="title">{{ __('Edit Comment') }}</x-slot>
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             <a href="{{ $recording->recordableShowPath() }}">&larr; Back to post #{{ $recording->id }}</a>
