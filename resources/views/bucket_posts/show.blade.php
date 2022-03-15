@@ -1,9 +1,13 @@
 <x-app-layout>
     <x-slot name="title">{{ $recording->recordable->title }}</x-slot>
 
+    <x-slot name="meta">
+        <meta name="current-recording-id" content="{{ $recording->id }}" />
+    </x-slot>
+
     <x-slot name="header">
         <div class="flex items-center justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            <h2 class="text-xl font-semibold leading-tight text-gray-800">
                 <a href="{{ route('buckets.blogs.posts.index', [$recording->bucket, $recording->parent]) }}">&larr; Back to posts</a>
             </h2>
 
@@ -15,8 +19,8 @@
     </x-slot>
 
     <div class="sm:py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
                 <div class="p-8 sm:px-20">
                     @include('recordings._recording', ['recording' => $recording])
 
