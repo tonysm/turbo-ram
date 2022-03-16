@@ -6,7 +6,7 @@
     </div>
 @endif
 
-<form method="POST" action="{{ $recording->exists ? route('buckets.comments.update', [$recording->bucket, $recording]) : route('buckets.recordings.comments.store', [$recording->bucket, $recording->parent]) }}" class="w-full">
+<form method="POST" data-turbo-action="advance" action="{{ $recording->exists ? route('buckets.comments.update', [$recording->bucket, $recording]) : route('buckets.recordings.comments.store', [$recording->bucket, $recording->parent]) }}" class="w-full">
     @csrf
 
     @if ($recording->exists)
@@ -19,7 +19,7 @@
     </div>
 
     <div class="flex items-center justify-end mt-4">
-        <a class="text-sm text-gray-600 underline hover:text-gray-900" href="{{ $recording->recordableShowPath() }}">
+        <a class="hidden text-sm text-gray-600 underline sm:inline-block hover:text-gray-900" href="{{ $recording->recordableShowPath() }}">
             {{ __('Cancel') }}
         </a>
 

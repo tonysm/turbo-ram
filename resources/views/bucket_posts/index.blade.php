@@ -1,10 +1,6 @@
 <x-app-layout>
     <x-slot name="title">{{ __('Posts') }}</x-slot>
 
-    <x-slot name="meta">
-        <meta name="current-user-blog-id" content="{{ $blog->id }}" />
-    </x-slot>
-
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
