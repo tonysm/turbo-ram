@@ -13,6 +13,7 @@
             ? route('buckets.posts.update', [$recording->bucket, $recording])
             : route('buckets.blogs.posts.store', [$recording->bucket, $recording->parent])
     }}"
+    data-turbo-action="replace"
 >
     @csrf
 

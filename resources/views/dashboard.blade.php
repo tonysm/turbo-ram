@@ -9,7 +9,7 @@
 
     <div class="sm:py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
+            <div class="overflow-hidden bg-white sm:shadow-xl sm:rounded-lg">
                 <div class="p-8 sm:px-20">
                     @if ($bucket->events()->count() == 0)
                     <p class="text-center">You currently have no posts.</p>
