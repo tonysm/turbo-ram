@@ -35,9 +35,7 @@
 }
 
 .trix-content h1 {
-    font-size: 1.25rem !important;
-    line-height: 1.25rem !important;
-    @apply leading-5 font-semibold mb-4;
+    @apply leading-5 font-semibold mb-4 text-2xl !important;
 }
 
 .trix-content a:not(.no-underline) {
@@ -56,4 +54,15 @@
 
 .trix-content img {
     margin: 0 auto;
+}
+
+.trix-button--icon-increase-nesting-level,
+.trix-button--icon-decrease-nesting-level,
+.trix-button--icon-strike,
+.trix-button--icon-code,
+.trix-button-group.trix-button-group--file-tools { display:none; }
+
+trix-editor.trix-content {
+  @apply appearance-none w-full bg-white text-gray-700 border-gray-300 rounded-md shadow-sm text-lg focus:border-indigo-300 focus:ring focus:ring-indigo-300 focus:ring-opacity-50;
+  min-height: 400px;
 }

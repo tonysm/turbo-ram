@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d495aa228e3489bae3bf1af71b94c0e5",
+    "content-hash": "21d71bbedbf96058bbcb8ccd806b91ac",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -5950,16 +5950,16 @@
         },
         {
             "name": "tonysm/tailwindcss-laravel",
-            "version": "0.3.0",
+            "version": "0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tonysm/tailwindcss-laravel.git",
-                "reference": "7a7c8cbdd61394f9d815e3b79065a4fbeec6ed27"
+                "reference": "b60fea7d9cd33afee5b65d4b172fd6531e86f203"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tonysm/tailwindcss-laravel/zipball/7a7c8cbdd61394f9d815e3b79065a4fbeec6ed27",
-                "reference": "7a7c8cbdd61394f9d815e3b79065a4fbeec6ed27",
+                "url": "https://api.github.com/repos/tonysm/tailwindcss-laravel/zipball/b60fea7d9cd33afee5b65d4b172fd6531e86f203",
+                "reference": "b60fea7d9cd33afee5b65d4b172fd6531e86f203",
                 "shasum": ""
             },
             "require": {
@@ -6014,7 +6014,7 @@
             ],
             "support": {
                 "issues": "https://github.com/tonysm/tailwindcss-laravel/issues",
-                "source": "https://github.com/tonysm/tailwindcss-laravel/tree/0.3.0"
+                "source": "https://github.com/tonysm/tailwindcss-laravel/tree/0.4.0"
             },
             "funding": [
                 {
@@ -6022,7 +6022,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-02-13T23:10:04+00:00"
+            "time": "2022-04-12T22:06:39+00:00"
         },
         {
             "name": "tonysm/turbo-laravel",

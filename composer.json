@@ -15,7 +15,7 @@
         "pusher/pusher-php-server": "^7.0",
         "tonysm/importmap-laravel": "^0.4.1",
         "tonysm/rich-text-laravel": "^1.4",
-        "tonysm/tailwindcss-laravel": "^0.3.0",
+        "tonysm/tailwindcss-laravel": "^0.4.0",
         "tonysm/turbo-laravel": "^1.1"
     },
     "require-dev": {
